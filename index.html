@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000">
+    <title>Расписание группы</title>
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgZmlsbD0iIzAwNzZmNiIgcng9IjIwIi8+PHRleHQgeD0iNTAiIHk9IjgwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiPlI8L3RleHQ+PC9zdmc+">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogItCg0LDRgdGB0LvRjNCy0LDRjtCJINCy0L7RgdGC0LDQstC70Y/QvdC+0LUg0L/RgNC+0YTQtdGB0YHQuNC+0L3QsNC70YzQvdC+0LkiLAogICJzaG9ydF9uYW1lIjogItCg0LDRgdGB0LvRjNCy0LDRjiIsCiAgInN0YXJ0X3VybCIgOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIZHBaSFJvUFNJeE1EQWxJaUJvWldsbmFIUTlJakV3TUNVaUlHWnBiR3c5SW1Kc1lTd2dZMjl1ZEdWdWRDQTlJbU52YlM5cGJYQnNZV2x1Wnk5cGJYQnNZV2x1WnlJZ1ptbHlkRDBpWVhCd2JHbGpZWFJwYjI0aUlIaHRiRzVjOVhWelpTazdJQzgrUEhCaGRHZ2daRDBpVFRBd01EQWxNakF3TkNBeE1EQXdYekF3TURBd0lERXdNREF3SURFeE1EQWxNREF3TURBaUlITjBlV3hsUFNKbWFXeHNJajQ4YzNSNWJHVStMbU52YlM5cGJYQnNZV2x1Wnk5cGJYQnNZV2x1WnlJZ1ptbHlkRDBpWVhCd2JHbGpZWFJwYjI0aUlIaHRiRzVjOVhWelpTazdJQzgrUEhCaGRHZ2daRDBpVFRBd01EQWxNakF3TkNBeE1EQXdYekF3TURBd0lERXdNREF3SURFeE1EQWxNREF3TURBaUlITjBlV3hsUFNKbWFXeHNJajQ4YzNSNWJHVStMbU52YlM5cGJYQnNZV2x1Wnk5cGJYQnNZV2x1WnlJZ1ptbHlkRDBpWVhCd2JHbGpZWFJwYjI0aUlIaHRiRzVjOVhWelpTazdJQzgrUEhCaGRHZ2daRDBpVFRBd01EQWxNakF3TkNBeE1EQXdYekF3TURBd0lERXdNREF3SURFeE1EQWxNREF3TURBaUlITjBlV3hsUFNKbWFXeHNJajQ4YzNSNWJHVStMbU52YlM5cGJYQnNZV2x1Wnk5cGJYQnNZV2x1WnlJZ1ptbHlkRDBpWVhCd2JHbGpZWFJwYjI0aUlIaHRiRzVjOVhWelpTazdJQzgrUEhCaGRHZ2daRDBpVFRBd01EQWxNakF3TkNBeE1EQXdYekF3TURBd0lERXdNREF3SURFeE1EQWxNREF3TURBaUlITjBlV3hsUFNKbWFXeHNJajQ4YzNSNWJHVStMbU52YlM5cGJYQnNZV2x1Wnk5cGJYQnNZV2x1WnlJZ1ptbHlkRDBpWVhCd2JHbGpZWFJwYjI0aUlIaHRiRzVjOVhWelpTazdJQzgrUEhCaGRHZ2daRDBpVFRBd01EQWxNakF3TkNBeE1EQXdYekF3TURBd0lERXdNREF3SURFeE1EQWxNREF3TURBaUlITjBlV3hsUFNKbWFXeHNJajQ4YzNSNWJHVStMbU52YlM5cGJYQnNZV2x1Wnk5cGJYQnNZV2x1WnlJZ1ptbHlkRDBpWVhCd2JHbGpZWFJwYjI0aUlIaHRiRzVjOVhWelpTazdJQzgrUEhCaGRHZ2daRDBpVFRBd01EQWxNakF3TkNBeE1EQXdYekF3TURBd0lERXdNREF3SURFeE1EQWxNREF3TURBaUlITjBlV3hsUFNKbWFXeHNJajQ4YzNSNWJHVStMbU52YlM5cGJYQnNZV2x1Wnk5cGJYQnNZV2x1WnlJZ1ptbHlkRDBpWVhCd2JHbGpZWFJwYjI0aUlIaHRiRzVjOVhWelpTazdJQzgrUEhCaGRHZ2daRDBpVFRBd01EQWxNakF3TkNBeE1EQXdYekF3TURBd0lERXdNREF3SURFeE1EQWxNREF3TURBaUlITjBlV3hsUFNKbWFXeHNJajQ4YzNSNWJHVStMbU52YlM5cGJYQnNZV2x1Wnk5cGJYQnNZV2x1WnlJZ1ptbHlkRDBpWVhCd2JHbGpZWFJwYjI0aUlIaHRiRzVjOVhWelpTazdJQzgrUEhCaGRHZ2daRDBpVFRBd01EQWxNakF3TkNBeE1EQXdYekF3TURBd0lERXdNREF3SURFeE1EQWxNREF3TURBaUlITjBlV3hsUFNKbWFXeHNJajQ4YzNSNWJHVStQZz09IiwKICAgICAgInNpemVzIjogIjE0NHgxNDQiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgICB9CiAgXQp9">
+    <style>
+        :root {
+            --primary: #0076f6;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --background: #ffffff;
+            --text: #212529;
+            --card-bg: #ffffff;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+            --border-radius: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        .theme-glass {
+            --background: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.15);
+            --card-shadow: rgba(0, 0, 0, 0.2);
+            --text: #ffffff;
+            --primary: rgba(255, 255, 255, 0.8);
+            --secondary: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .theme-dark {
+            --background: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --card-shadow: rgba(0, 0, 0, 0.3);
+            --text: #f0f0f0;
+        }
+
+        .theme-nature {
+            --background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-shadow: rgba(0, 0, 0, 0.2);
+            --text: #1B5E20;
+            --primary: #388E3C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--info));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .week-indicator {
+            background: var(--card-bg);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px var(--card-shadow);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .theme-selector {
+            position: relative;
+        }
+
+        .theme-button {
+            background: var(--card-bg);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px var(--card-shadow);
+            color: var(--text);
+        }
+
+        .theme-options {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 10px;
+            box-shadow: 0 10px 25px var(--card-shadow);
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+            width: 150px;
+        }
+
+        .theme-option {
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .theme-option:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .day-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding: 5px 0;
+            scrollbar-width: none;
+        }
+
+        .day-navigation::-webkit-scrollbar {
+            display: none;
+        }
+
+        .day-button {
+            padding: 12px 18px;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+            margin: 0 5px;
+            box-shadow: 0 4px 8px var(--card-shadow);
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .day-button.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 6px 15px rgba(0,118,246,0.4);
+        }
+
+        .schedule-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 10px 30px var(--card-shadow);
+            margin-bottom: 30px;
+        }
+
+        .day-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .lesson {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.03);
+            border-left: 4px solid var(--primary);
+        }
+
+        .lesson-time {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .lesson-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .lesson-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+
+        .lesson-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .empty-schedule {
+            text-align: center;
+            padding: 30px;
+            color: var(--secondary);
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 480px) {
+            .app-container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .day-button {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+                min-width: 70px;
+            }
+            
+            .lesson {
+                padding: 12px;
+            }
+            
+            .lesson-name {
+                font-size: 1rem;
+            }
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .schedule-container {
+            animation: fadeIn 0.5s ease;
+        }
+
+        .lesson {
+            animation: fadeIn 0.5s ease;
+            animation-fill-mode: both;
+        }
+
+        .lesson:nth-child(1) { animation-delay: 0.1s; }
+        .lesson:nth-child(2) { animation-delay: 0.2s; }
+        .lesson:nth-child(3) { animation-delay: 0.3s; }
+        .lesson:nth-child(4) { animation-delay: 0.4s; }
+        .lesson:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Расписание</h1>
+            <div class="week-indicator" id="weekIndicator">Неделя 1</div>
+            <div class="theme-selector">
+                <button class="theme-button" id="themeButton">🎨</button>
+                <div class="theme-options" id="themeOptions">
+                    <div class="theme-option" data-theme="default">Стандартная</div>
+                    <div class="theme-option" data-theme="glass">Жидкое стекло</div>
+                    <div class="theme-option" data-theme="dark">Тёмная</div>
+                    <div class="theme-option" data-theme="nature">Природа</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="day-navigation">
+            <button class="day-button active" data-day="0">Пн</button>
+            <button class="day-button" data-day="1">Вт</button>
+            <button class="day-button" data-day="2">Ср</button>
+            <button class="day-button" data-day="3">Чт</button>
+            <button class="day-button" data-day="4">Пт</button>
+            <button class="day-button" data-day="5">Сб</button>
+            <button class="day-button" data-day="6">Вс</button>
+        </div>
+
+        <div class="schedule-container">
+            <h2 class="day-title">Понедельник</h2>
+            <div id="scheduleContent">
+                <!-- Расписание будет загружено здесь -->
+            </div>
+        </div>
+
+        <footer>
+            Сделано с ❤️ для нашей группы
+        </footer>
+    </div>
+
+    <script>
+        // Определение текущей недели (чётная/нечётная)
+        function getCurrentWeek() {
+            // Фиксированная дата начала семестра для примера (можно изменить)
+            const startDate = new Date('2024-02-05');
+            const today = new Date();
+            const diffTime = Math.abs(today - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+            const weekNumber = Math.floor(diffDays / 7) % 2;
+            
+            // 0 - первая неделя, 1 - вторая неделя
+            return weekNumber;
+        }
+
+        // Данные расписания
+        const scheduleData = {
+            0: { // Понедельник
+                name: "Понедельник",
+                lessons: [
+                    {
+                        time: "8:30-10:00",
+                        name: "Релейная защита и противоаварийная автоматика",
+                        room: "1-8",
+                        teacher: "Ниналалов С.А.",
+                        week: null // null - для обеих недель
+                    },
+                    {
+                        time: "10:10-11:40",
+                        name: "Геотермальная энергетика",
+                        room: "1-8",
+                        teacher: "Алхасова Д.А.",
+                        week: null
+                    },
+                    {
+                        time: "12:00-13:30",
+                        name: "Теоретические основы использования ВЭ",
+                        room: "1-2лк",
+                        teacher: "Алхасова Д.А.",
+                        week: null
+                    }
+                ]
+            },
+            1: { // Вторник
+                name: "Вторник",
+                lessons: [
+                    {
+                        time: "8:30-10:00",
+                        name: "Физкультура",
+                        room: "Спортзал",
+                        teacher: "",
+                        week: 1 // Только вторая неделя
+                    },
+                    {
+                        time: "10:10-11:40",
+                        name: "Энергетические сооружения установок нетрадиционной и ВЭ",
+                        room: "1-2лк",
+                        teacher: "Баба Д.",
+                        week: null
+                    },
+                    {
+                        time: "12:00-13:30",
+                        name: "Энергетические сооружения установок нетрадиционной и ВЭ",
+                        room: "1-2лк",
+                        teacher: "Баба Д.",
+                        week: 0 // Только первая неделя
+                    }
+                ]
+            },
+            2: { // Среда
+                name: "Среда",
+                lessons: [
+                    {
+                        time: "8:30-10:00",
+                        name: "Теоретические основы использования ВЭ",
+                        room: "2-41",
+                        teacher: "Алхасова Д.А.",
+                        week: 1 // Только вторая неделя
+                    },
+                    {
+                        time: "10:10-11:40",
+                        name: "Энергетические сооружения установок нетрадиционной и ВЭ",
+                        room: "1-2лк",
+                        teacher: "Баба Д.",
+                        week: null
+                    },
+                    {
+                        time: "12:00-13:30",
+                        name: "Релейная защита и противоаварийная автоматика",
+                        room: "1-8",
+                        teacher: "Ниналалов С.А.",
+                        week: null
+                    }
+                ]
+            },
+            3: { // Четверг
+                name: "Четверг",
+                lessons: [
+                    {
+                        time: "10:10-11:40",
+                        name: "Техника высоких напряжений",
+                        room: "2-30",
+                        teacher: "Шахсинов Г.Ш.",
+                        week: null
+                    },
+                    {
+                        time: "12:00-13:30",
+                        name: "Метрология",
+                        room: "2-30",
+                        teacher: "Офицерова Н.В.",
+                        week: null
+                    },
+                    {
+                        time: "13:40-15:10",
+                        name: "Метрология",
+                        room: "2-30",
+                        teacher: "Офицерова Н.В.",
+                        week: 0 // Только первая неделя
+                    }
+                ]
+            },
+            4: { // Пятница
+                name: "Пятница",
+                lessons: [
+                    {
+                        time: "10:10-11:40",
+                        name: "Эксплуатация электротех. оборудования ГЭС, ГАЭС",
+                        room: "2-30",
+                        teacher: "Шахсинов Г.Ш.",
+                        week: null
+                    },
+                    {
+                        time: "12:00-13:30",
+                        name: "Энергетическое оборудование возобновляемой энергетики",
+                        room: "2-30",
+                        teacher: "Баламирзоев А.Г.",
+                        week: null
+                    },
+                    {
+                        time: "13:40-15:10",
+                        name: "Английский язык",
+                        room: "1-19",
+                        teacher: "Алибекова Д.М.",
+                        week: null
+                    }
+                ]
+            },
+            5: { // Суббота
+                name: "Суббота",
+                lessons: []
+            },
+            6: { // Воскресенье
+                name: "Воскресенье",
+                lessons: []
+            }
+        };
+
+        // Текущая неделя (0 - первая, 1 - вторая)
+        let currentWeek = getCurrentWeek();
+        // Текущий выбранный день (0-6)
+        let currentDay = new Date().getDay() - 1;
+        if (currentDay < 0) currentDay = 0; // Если воскресенье, показываем понедельник
+
+        // Инициализация приложения
+        document.addEventListener('DOMContentLoaded', function() {
+            // Установка индикатора недели
+            document.getElementById('weekIndicator').textContent = `Неделя ${currentWeek + 1}`;
+            
+            // Активация текущего дня в навигации
+            const dayButtons = document.querySelectorAll('.day-button');
+            dayButtons.forEach((button, index) => {
+                if (index === currentDay) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+                
+                button.addEventListener('click', () => {
+                    dayButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    currentDay = parseInt(button.getAttribute('data-day'));
+                    renderSchedule();
+                });
+            });
+            
+            // Настройка переключения тем
+            const themeButton = document.getElementById('themeButton');
+            const themeOptions = document.getElementById('themeOptions');
+            
+            themeButton.addEventListener('click', () => {
+                themeOptions.style.display = themeOptions.style.display === 'flex' ? 'none' : 'flex';
+            });
+            
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const theme = option.getAttribute('data-theme');
+                    changeTheme(theme);
+                    themeOptions.style.display = 'none';
+                });
+            });
+            
+            // Закрытие меню тем при клике вне его
+            document.addEventListener('click', (e) => {
+                if (!themeButton.contains(e.target) && !themeOptions.contains(e.target)) {
+                    themeOptions.style.display = 'none';
+                }
+            });
+            
+            // Первоначальная отрисовка расписания
+            renderSchedule();
+            
+            // Регистрация Service Worker для PWA
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('sw.js')
+                        .then((registration) => {
+                            console.log('SW registered: ', registration);
+                        })
+                        .catch((registrationError) => {
+                            console.log('SW registration failed: ', registrationError);
+                        });
+                });
+            }
+        });
+
+        // Функция отрисовки расписания для выбранного дня
+        function renderSchedule() {
+            const scheduleContent = document.getElementById('scheduleContent');
+            const dayTitle = document.querySelector('.day-title');
+            
+            const dayData = scheduleData[currentDay];
+            dayTitle.textContent = dayData.name;
+            
+            // Фильтрация занятий по текущей неделе
+            const filteredLessons = dayData.lessons.filter(lesson => 
+                lesson.week === null || lesson.week === currentWeek
+            );
+            
+            if (filteredLessons.length === 0) {
+                scheduleContent.innerHTML = '<div class="empty-schedule">Занятий нет</div>';
+                return;
+            }
+            
+            let html = '';
+            filteredLessons.forEach(lesson => {
+                html += `
+                    <div class="lesson">
+                        <div class="lesson-time">${lesson.time}</div>
+                        <div class="lesson-name">${lesson.name}</div>
+                        <div class="lesson-details">
+                            <div class="lesson-detail">📍 ${lesson.room}</div>
+                            <div class="lesson-detail">👨‍🏫 ${lesson.teacher}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            scheduleContent.innerHTML = html;
+        }
+
+        // Функция смены темы
+        function changeTheme(themeName) {
+            document.body.classList.remove('theme-glass', 'theme-dark', 'theme-nature');
+            
+            if (themeName !== 'default') {
+                document.body.classList.add(`theme-${themeName}`);
+            }
+            
+            // Сохранение выбранной темы в localStorage
+            localStorage.setItem('selectedTheme', themeName);
+        }
+
+        // Загрузка сохранённой темы
+        const savedTheme = localStorage.getItem('selectedTheme');
+        if (savedTheme) {
+            changeTheme(savedTheme);
+        }
+    </script>
+</body>
+</html>
