@@ -25,24 +25,35 @@
             --card-shadow: rgba(0, 0, 0, 0.1);
             --border-radius: 16px;
             --transition: all 0.3s ease;
+            
+            /* Цвета для темы жидкого стекла */
+            --accent: #0A84FF;
+            --green: #30D158;
+            --yellow: #FFD60A;
+            --red: #FF453A;
+            --text-primary: rgba(0,0,0,.9);
+            --text-secondary: rgba(0,0,0,.6);
         }
 
         .theme-glass {
-            --background: rgba(255, 255, 255, 0.1);
-            --card-bg: rgba(255, 255, 255, 0.15);
-            --card-shadow: rgba(0, 0, 0, 0.2);
-            --text: #ffffff;
-            --primary: rgba(255, 255, 255, 0.8);
-            --secondary: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            --background: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-shadow: rgba(0, 0, 0, 0.12);
+            --text: rgba(0,0,0,.9);
+            --primary: #0A84FF;
+            --secondary: rgba(0,0,0,.6);
+            --border-radius: 24px;
+            backdrop-filter: saturate(160%) blur(20px);
+            -webkit-backdrop-filter: saturate(160%) blur(20px);
         }
 
         .theme-dark {
             --background: #1a1a1a;
-            --card-bg: #2d2d2d;
+            --card-bg: rgba(0, 0, 0, 0.2);
             --card-shadow: rgba(0, 0, 0, 0.3);
-            --text: #f0f0f0;
+            --text: rgba(255,255,255,.92);
+            --text-primary: rgba(255,255,255,.92);
+            --text-secondary: rgba(255,255,255,.6);
         }
 
         .theme-nature {
@@ -69,10 +80,32 @@
             overflow-x: hidden;
         }
 
+        /* Фон с параллакс эффектом */
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(255, 255, 255, 0) 70%),
+                        radial-gradient(circle at 70% 60%, rgba(200, 220, 255, 0.3) 0%, rgba(200, 220, 255, 0.1) 30%, rgba(200, 220, 255, 0) 60%);
+            background-attachment: fixed;
+            pointer-events: none;
+        }
+
+        .theme-dark .parallax-bg {
+            background: radial-gradient(circle at 30% 40%, rgba(100, 100, 255, 0.2) 0%, rgba(80, 80, 200, 0.1) 40%, rgba(0, 0, 0, 0) 70%),
+                        radial-gradient(circle at 70% 60%, rgba(150, 100, 255, 0.2) 0%, rgba(120, 80, 200, 0.1) 30%, rgba(0, 0, 0, 0) 60%),
+                        #1a1a1a;
+        }
+
         .app-container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         header {
@@ -98,8 +131,20 @@
             padding: 8px 16px;
             border-radius: 20px;
             font-weight: 600;
-            box-shadow: 0 4px 12px var(--card-shadow);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset;
             border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .theme-glass .week-indicator {
+            background: rgba(255,255,255,.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.35);
+            backdrop-filter: saturate(160%) blur(12px);
+            -webkit-backdrop-filter: saturate(160%) blur(12px);
+        }
+
+        .theme-dark .week-indicator {
+            background: rgba(0,0,0,.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.15);
         }
 
         .theme-selector {
@@ -120,6 +165,18 @@
             color: var(--text);
         }
 
+        .theme-glass .theme-button {
+            background: rgba(255,255,255,.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.35);
+            backdrop-filter: saturate(160%) blur(12px);
+            -webkit-backdrop-filter: saturate(160%) blur(12px);
+        }
+
+        .theme-dark .theme-button {
+            background: rgba(0,0,0,.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.15);
+        }
+
         .theme-options {
             position: absolute;
             top: 50px;
@@ -133,6 +190,18 @@
             gap: 10px;
             z-index: 100;
             width: 150px;
+        }
+
+        .theme-glass .theme-options {
+            background: rgba(255,255,255,.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.35);
+            backdrop-filter: saturate(160%) blur(20px);
+            -webkit-backdrop-filter: saturate(160%) blur(20px);
+        }
+
+        .theme-dark .theme-options {
+            background: rgba(0,0,0,.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.15);
         }
 
         .theme-option {
@@ -176,10 +245,22 @@
             text-align: center;
         }
 
+        .theme-glass .day-button {
+            background: rgba(255,255,255,.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.35);
+            backdrop-filter: saturate(160%) blur(12px);
+            -webkit-backdrop-filter: saturate(160%) blur(12px);
+        }
+
+        .theme-dark .day-button {
+            background: rgba(0,0,0,.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.15);
+        }
+
         .day-button.active {
             background: var(--primary);
             color: white;
-            box-shadow: 0 6px 15px rgba(0,118,246,0.4);
+            box-shadow: 0 6px 15px rgba(10,132,255,0.4);
         }
 
         .schedule-container {
@@ -188,6 +269,19 @@
             padding: 20px;
             box-shadow: 0 10px 30px var(--card-shadow);
             margin-bottom: 30px;
+        }
+
+        .theme-glass .schedule-container {
+            background: rgba(255,255,255,.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.35);
+            backdrop-filter: saturate(160%) blur(20px);
+            -webkit-backdrop-filter: saturate(160%) blur(20px);
+            padding: 20px;
+        }
+
+        .theme-dark .schedule-container {
+            background: rgba(0,0,0,.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.15);
         }
 
         .day-title {
@@ -207,6 +301,18 @@
             border-left: 4px solid var(--primary);
         }
 
+        .theme-glass .lesson {
+            background: rgba(255,255,255,.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.2);
+            backdrop-filter: saturate(160%) blur(12px);
+            -webkit-backdrop-filter: saturate(160%) blur(12px);
+        }
+
+        .theme-dark .lesson {
+            background: rgba(0,0,0,.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.1);
+        }
+
         .lesson-time {
             font-weight: 600;
             color: var(--primary);
@@ -218,6 +324,25 @@
             font-weight: 600;
             margin-bottom: 8px;
             font-size: 1.1rem;
+        }
+
+        .lesson-type {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .lecture {
+            background-color: rgba(10, 132, 255, 0.15);
+            color: var(--accent);
+        }
+
+        .practice {
+            background-color: rgba(48, 209, 88, 0.15);
+            color: var(--green);
         }
 
         .lesson-details {
@@ -270,6 +395,14 @@
             .lesson-name {
                 font-size: 1rem;
             }
+
+            .schedule-container {
+                padding: 16px;
+            }
+
+            .theme-glass .schedule-container {
+                padding: 16px;
+            }
         }
 
         /* Анимации */
@@ -295,6 +428,7 @@
     </style>
 </head>
 <body>
+    <div class="parallax-bg"></div>
     <div class="app-container">
         <header>
             <h1>Расписание</h1>
@@ -303,7 +437,7 @@
                 <button class="theme-button" id="themeButton">🎨</button>
                 <div class="theme-options" id="themeOptions">
                     <div class="theme-option" data-theme="default">Стандартная</div>
-                    <div class="theme-option" data-theme="glass">Жидкое стекло(в разработке)</div>
+                    <div class="theme-option" data-theme="glass">Жидкое стекло</div>
                     <div class="theme-option" data-theme="dark">Тёмная</div>
                     <div class="theme-option" data-theme="nature">Природа</div>
                 </div>
@@ -328,7 +462,7 @@
         </div>
 
         <footer>
-            А када не делали
+            Обновляется автоматически
         </footer>
     </div>
 
@@ -344,6 +478,50 @@
             
             // 0 - первая неделя, 1 - вторая неделя
             return weekNumber;
+        }
+
+        // Определение типа занятия (лекция/практика) в зависимости от дня, недели и номера пары
+        function getLessonType(day, week, pairNumber, lessonName) {
+            // Понедельник
+            if (day === 0) {
+                if (pairNumber === 0) return "лекция"; // 1 пара всегда лекция
+                if (pairNumber === 1) return week === 0 ? "лекция" : "практика"; // 2 пара: 1 неделя - лекция, 2 неделя - практика
+                if (pairNumber === 2) return "практика"; // 3 пара всегда практика
+            }
+            
+            // Вторник
+            if (day === 1) {
+                if (pairNumber === 1) return "лекция"; // 2 пара всегда лекция
+                if (pairNumber === 2) return "практика"; // 3 пара всегда практика (только 1 неделя)
+            }
+            
+            // Среда
+            if (day === 2) {
+                if (pairNumber === 0) return "лекция"; // 1 пара всегда лекция (только 2 неделя)
+                if (pairNumber === 1 || pairNumber === 2) return "практика"; // 2 и 3 пара всегда практика
+            }
+            
+            // Четверг
+            if (day === 3) {
+                if (pairNumber === 1) return week === 0 ? "лекция" : "практика"; // 2 пара: 1 неделя - лекция, 2 неделя - практика
+                if (pairNumber === 2) return "практика"; // 3 пара всегда практика
+                if (pairNumber === 3) return "лекция"; // 4 пара всегда лекция (только 1 неделя)
+            }
+            
+            // Пятница
+            if (day === 4) {
+                if (pairNumber === 1 || pairNumber === 2) return week === 0 ? "лекция" : "практика"; // 2 и 3 пара: 1 неделя - лекция, 2 неделя - практика
+                if (pairNumber === 3) return "практика"; // 4 пара всегда практика
+            }
+            
+            // По умолчанию определяем по названию
+            if (lessonName.toLowerCase().includes("лекция") || lessonName.toLowerCase().includes("лк")) {
+                return "лекция";
+            } else if (lessonName.toLowerCase().includes("практика") || lessonName.toLowerCase().includes("пр")) {
+                return "практика";
+            }
+            
+            return "занятие"; // если не удалось определить
         }
 
         // Данные расписания
@@ -575,10 +753,14 @@
             }
             
             let html = '';
-            filteredLessons.forEach(lesson => {
+            filteredLessons.forEach((lesson, index) => {
+                const lessonType = getLessonType(currentDay, currentWeek, index, lesson.name);
+                const typeClass = lessonType === "лекция" ? "lecture" : "practice";
+                
                 html += `
                     <div class="lesson">
                         <div class="lesson-time">${lesson.time}</div>
+                        <div class="lesson-type ${typeClass}">${lessonType}</div>
                         <div class="lesson-name">${lesson.name}</div>
                         <div class="lesson-details">
                             <div class="lesson-detail">📍 ${lesson.room}</div>
