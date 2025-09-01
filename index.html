@@ -36,15 +36,16 @@
         }
 
         .theme-glass {
-            --background: rgba(255, 255, 255, 0.08);
-            --card-bg: rgba(255, 255, 255, 0.08);
-            --card-shadow: rgba(0, 0, 0, 0.12);
-            --text: rgba(0,0,0,.9);
+            --background: rgba(255, 255, 255, 0.7);
+            --card-bg: rgba(255, 255, 255, 0.4);
+            --card-shadow: rgba(255, 255, 255, 0.2);
+            --text: rgba(0,0,0,.85);
             --primary: #0A84FF;
             --secondary: rgba(0,0,0,.6);
-            --border-radius: 24px;
-            backdrop-filter: saturate(160%) blur(20px);
-            -webkit-backdrop-filter: saturate(160%) blur(20px);
+            --border-radius: 20px;
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            background-color: rgba(255, 255, 255, 0.5);
         }
 
         .theme-dark {
@@ -94,6 +95,11 @@
             pointer-events: none;
         }
 
+        .theme-glass .parallax-bg {
+            background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.3) 40%, rgba(255, 255, 255, 0.1) 70%),
+                        radial-gradient(circle at 70% 60%, rgba(200, 220, 255, 0.5) 0%, rgba(200, 220, 255, 0.3) 30%, rgba(200, 220, 255, 0.1) 60%);
+        }
+
         .theme-dark .parallax-bg {
             background: radial-gradient(circle at 30% 40%, rgba(100, 100, 255, 0.2) 0%, rgba(80, 80, 200, 0.1) 40%, rgba(0, 0, 0, 0) 70%),
                         radial-gradient(circle at 70% 60%, rgba(150, 100, 255, 0.2) 0%, rgba(120, 80, 200, 0.1) 30%, rgba(0, 0, 0, 0) 60%),
@@ -136,10 +142,11 @@
         }
 
         .theme-glass .week-indicator {
-            background: rgba(255,255,255,.08);
+            background: rgba(255,255,255,.3);
             box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.35);
-            backdrop-filter: saturate(160%) blur(12px);
-            -webkit-backdrop-filter: saturate(160%) blur(12px);
+            backdrop-filter: saturate(180%) blur(12px);
+            -webkit-backdrop-filter: saturate(180%) blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .theme-dark .week-indicator {
@@ -166,10 +173,11 @@
         }
 
         .theme-glass .theme-button {
-            background: rgba(255,255,255,.08);
+            background: rgba(255,255,255,.3);
             box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.35);
-            backdrop-filter: saturate(160%) blur(12px);
-            -webkit-backdrop-filter: saturate(160%) blur(12px);
+            backdrop-filter: saturate(180%) blur(12px);
+            -webkit-backdrop-filter: saturate(180%) blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .theme-dark .theme-button {
@@ -193,10 +201,11 @@
         }
 
         .theme-glass .theme-options {
-            background: rgba(255,255,255,.08);
+            background: rgba(255,255,255,.3);
             box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.35);
-            backdrop-filter: saturate(160%) blur(20px);
-            -webkit-backdrop-filter: saturate(160%) blur(20px);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .theme-dark .theme-options {
@@ -246,10 +255,11 @@
         }
 
         .theme-glass .day-button {
-            background: rgba(255,255,255,.08);
+            background: rgba(255,255,255,.3);
             box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.35);
-            backdrop-filter: saturate(160%) blur(12px);
-            -webkit-backdrop-filter: saturate(160%) blur(12px);
+            backdrop-filter: saturate(180%) blur(12px);
+            -webkit-backdrop-filter: saturate(180%) blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .theme-dark .day-button {
@@ -272,11 +282,12 @@
         }
 
         .theme-glass .schedule-container {
-            background: rgba(255,255,255,.08);
+            background: rgba(255,255,255,.3);
             box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset, inset 0 1px 0 rgba(255,255,255,.35);
-            backdrop-filter: saturate(160%) blur(20px);
-            -webkit-backdrop-filter: saturate(160%) blur(20px);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
             padding: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .theme-dark .schedule-container {
@@ -302,10 +313,11 @@
         }
 
         .theme-glass .lesson {
-            background: rgba(255,255,255,.1);
+            background: rgba(255,255,255,.2);
             box-shadow: 0 4px 12px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.2);
-            backdrop-filter: saturate(160%) blur(12px);
-            -webkit-backdrop-filter: saturate(160%) blur(12px);
+            backdrop-filter: saturate(180%) blur(12px);
+            -webkit-backdrop-filter: saturate(180%) blur(12px);
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
         .theme-dark .lesson {
@@ -425,6 +437,29 @@
         .lesson:nth-child(3) { animation-delay: 0.3s; }
         .lesson:nth-child(4) { animation-delay: 0.4s; }
         .lesson:nth-child(5) { animation-delay: 0.5s; }
+        
+        /* Оффлайн уведомление */
+        .offline-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px var(--card-shadow);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .theme-glass .offline-notification {
+            background: rgba(255,255,255,.3);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
     </style>
 </head>
 <body>
@@ -464,6 +499,10 @@
         <footer>
             Обновляется автоматически
         </footer>
+    </div>
+    
+    <div class="offline-notification" id="offlineNotification">
+        <span>⚠️</span> Работает в оффлайн-режиме
     </div>
 
     <script>
@@ -720,6 +759,11 @@
             // Первоначальная отрисовка расписания
             renderSchedule();
             
+            // Проверка состояния сети
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+            
             // Регистрация Service Worker для PWA
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
@@ -789,6 +833,31 @@
         const savedTheme = localStorage.getItem('selectedTheme');
         if (savedTheme) {
             changeTheme(savedTheme);
+        }
+        
+        // Функция обновления статуса онлайн/оффлайн
+        function updateOnlineStatus() {
+            const notification = document.getElementById('offlineNotification');
+            if (!navigator.onLine) {
+                notification.style.display = 'flex';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            }
+        }
+    </script>
+    
+    <script>
+        // Service Worker для оффлайн-работы
+        if ('serviceWorker' in navigator) {
+            // Регистрируем Service Worker
+            navigator.serviceWorker.register('sw.js')
+            .then(function(registration) {
+                console.log('Service Worker зарегистрирован:', registration);
+            })
+            .catch(function(error) {
+                console.log('Ошибка регистрации Service Worker:', error);
+            });
         }
     </script>
 </body>
