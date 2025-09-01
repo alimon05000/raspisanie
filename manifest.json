@@ -1,0 +1,16 @@
+{
+  "name": "Расписание группы",
+  "short_name": "Расписание",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0076f6",
+  "description": "Приложение для просмотра расписания занятий с поддержкой офлайн-работы",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgZmlsbD0iIzAwNzZmNiIgcng9IjIwIi8+PHRleHQgeD0iNTAiIHk9IjgwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiPlI8L3RleHQ+PC9zdmc+",
+      "sizes": "150x150",
+      "type": "image/svg+xml"
+    }
+  ]
+}
