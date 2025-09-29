@@ -578,6 +578,277 @@
             background: #7b68ee;
             box-shadow: 0 4px 12px rgba(123, 104, 238, 0.4);
         }
+
+        /* Стили для регистрации и входа */
+        .auth-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: 0 10px 30px var(--card-shadow);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .theme-glass .auth-container {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .auth-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .theme-glass .auth-input {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .theme-dark .auth-input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .auth-switch {
+            color: var(--primary);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Стили для заметок */
+        .notes-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 10px 30px var(--card-shadow);
+            margin-bottom: 30px;
+        }
+
+        .theme-glass .notes-container {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .notes-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .note {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.03);
+            border-left: 4px solid var(--success);
+            position: relative;
+        }
+
+        .theme-glass .note {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-left: 4px solid #30D158;
+        }
+
+        .note-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .note-content {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .note-date {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            text-align: right;
+        }
+
+        .add-note-button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: var(--success);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .theme-glass .add-note-button {
+            background: #30D158;
+        }
+
+        .note-form {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .note-input, .note-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .note-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .note-submit {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: var(--success);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .note-cancel {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: var(--danger);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Навигация между разделами */
+        .app-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding: 5px 0;
+            scrollbar-width: none;
+        }
+
+        .app-navigation::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-button {
+            padding: 12px 18px;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+            margin: 0 5px;
+            box-shadow: 0 4px 8px var(--card-shadow);
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .theme-glass .nav-button {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .nav-button.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 6px 15px rgba(10,132,255,0.4);
+        }
+
+        .theme-glass .nav-button.active {
+            background: #7b68ee;
+            box-shadow: 0 6px 15px rgba(123, 104, 238, 0.4);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .logout-button {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: none;
+            background: var(--danger);
+            color: white;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -597,21 +868,76 @@
             </div>
         </header>
 
-        <div class="day-navigation">
-            <button class="day-button active" data-day="0">Пн</button>
-            <button class="day-button" data-day="1">Вт</button>
-            <button class="day-button" data-day="2">Ср</button>
-            <button class="day-button" data-day="3">Чт</button>
-            <button class="day-button" data-day="4">Пт</button>
-            <button class="day-button" data-day="5">Сб</button>
-            <button class="day-button" data-day="6">Вс</button>
+        <!-- Навигация между разделами -->
+        <div class="app-navigation" id="appNavigation" style="display: none;">
+            <button class="nav-button active" data-section="schedule">Расписание</button>
+            <button class="nav-button" data-section="notes">Объявления</button>
+            <button class="nav-button" data-section="admin" id="adminButton" style="display: none;">Админ-панель</button>
         </div>
 
-        <div class="schedule-container">
-            <h2 class="day-title">Понедельник</h2>
-            <div id="scheduleContent">
-                <!-- Расписание будет загружено здесь -->
+        <!-- Раздел расписания -->
+        <div class="section active" id="scheduleSection">
+            <div class="day-navigation">
+                <button class="day-button active" data-day="0">Пн</button>
+                <button class="day-button" data-day="1">Вт</button>
+                <button class="day-button" data-day="2">Ср</button>
+                <button class="day-button" data-day="3">Чт</button>
+                <button class="day-button" data-day="4">Пт</button>
+                <button class="day-button" data-day="5">Сб</button>
+                <button class="day-button" data-day="6">Вс</button>
             </div>
+
+            <div class="schedule-container">
+                <h2 class="day-title">Понедельник</h2>
+                <div id="scheduleContent">
+                    <!-- Расписание будет загружено здесь -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Раздел объявлений -->
+        <div class="section" id="notesSection">
+            <div class="notes-container">
+                <h2 class="notes-title">Объявления</h2>
+                <div id="notesContent">
+                    <!-- Объявления будут загружены здесь -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Раздел админ-панели -->
+        <div class="section" id="adminSection">
+            <div class="notes-container">
+                <h2 class="notes-title">Админ-панель</h2>
+                <div class="user-info">
+                    <span>Вы вошли как: <strong id="adminName"></strong></span>
+                    <button class="logout-button" id="adminLogoutButton">Выйти</button>
+                </div>
+                <button class="add-note-button" id="addNoteButton">Добавить объявление</button>
+                
+                <div class="note-form" id="noteForm">
+                    <input type="text" class="note-input" id="noteTitle" placeholder="Заголовок объявления">
+                    <textarea class="note-textarea" id="noteContent" placeholder="Текст объявления"></textarea>
+                    <div class="note-actions">
+                        <button class="note-submit" id="noteSubmit">Опубликовать</button>
+                        <button class="note-cancel" id="noteCancel">Отмена</button>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Мои объявления</h3>
+                <div id="adminNotesContent">
+                    <!-- Объявления администратора будут загружены здесь -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Форма регистрации/входа -->
+        <div class="auth-container" id="authContainer">
+            <h2 class="auth-title" id="authTitle">Регистрация</h2>
+            <input type="text" class="auth-input" id="authName" placeholder="Ваше имя">
+            <input type="password" class="auth-input" id="authPassword" placeholder="Пароль" style="display: none;">
+            <button class="auth-button" id="authButton">Зарегистрироваться</button>
+            <p>Уже есть аккаунт? <span class="auth-switch" id="authSwitch">Войти</span></p>
         </div>
 
         <footer>
@@ -816,8 +1142,26 @@
         let currentDay = new Date().getDay() - 1;
         if (currentDay < 0) currentDay = 0; // Если воскресенье, показываем понедельник
 
+        // Система пользователей и заметок
+        let currentUser = null;
+        let isLoginMode = false;
+        const adminUser = { name: "admin", password: "admin123" };
+        let notes = [];
+
         // Инициализация приложения
         document.addEventListener('DOMContentLoaded', function() {
+            // Проверяем, есть ли сохраненный пользователь
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showAppInterface();
+            } else {
+                showAuthInterface();
+            }
+
+            // Загружаем заметки
+            loadNotes();
+
             // Установка индикатора недели
             document.getElementById('weekIndicator').textContent = `Неделя ${currentWeek + 1}`;
             
@@ -878,6 +1222,28 @@
                 }
             });
             
+            // Навигация между разделами
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+                    document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                    
+                    button.classList.add('active');
+                    const sectionId = button.getAttribute('data-section') + 'Section';
+                    document.getElementById(sectionId).classList.add('active');
+                });
+            });
+            
+            // Аутентификация
+            document.getElementById('authSwitch').addEventListener('click', toggleAuthMode);
+            document.getElementById('authButton').addEventListener('click', handleAuth);
+            
+            // Админ-панель
+            document.getElementById('addNoteButton').addEventListener('click', showNoteForm);
+            document.getElementById('noteCancel').addEventListener('click', hideNoteForm);
+            document.getElementById('noteSubmit').addEventListener('click', addNote);
+            document.getElementById('adminLogoutButton').addEventListener('click', logout);
+            
             // Первоначальная отрисовка расписания
             renderSchedule();
             
@@ -934,7 +1300,7 @@
             scheduleContent.innerHTML = html;
         }
 
-        // Функция сменя темы
+        // Функция смены темы
         function changeTheme(themeName) {
             document.body.classList.remove('theme-glass', 'theme-dark', 'theme-nature');
             
@@ -970,7 +1336,8 @@
                 scheduleData: scheduleData,
                 currentWeek: currentWeek,
                 currentDay: currentDay,
-                lastUpdated: new Date().toISOString()
+                lastUpdated: new Date().toISOString(),
+                notes: notes
             };
             
             localStorage.setItem('scheduleAppData', JSON.stringify(appData));
@@ -986,6 +1353,12 @@
                     // Восстанавливаем текущий день и неделю
                     currentWeek = appData.currentWeek || currentWeek;
                     currentDay = appData.currentDay || currentDay;
+                    
+                    // Восстанавливаем заметки
+                    if (appData.notes) {
+                        notes = appData.notes;
+                        renderNotes();
+                    }
                     
                     // Обновляем индикатор недели
                     document.getElementById('weekIndicator').textContent = `Неделя ${currentWeek + 1}`;
@@ -1044,6 +1417,191 @@
                         console.log('Кэш обновлен');
                     }
                 });
+            }
+        }
+
+        // Функции для системы пользователей и заметок
+        function showAuthInterface() {
+            document.getElementById('authContainer').style.display = 'block';
+            document.getElementById('appNavigation').style.display = 'none';
+            document.getElementById('scheduleSection').style.display = 'none';
+            document.getElementById('notesSection').style.display = 'none';
+            document.getElementById('adminSection').style.display = 'none';
+        }
+
+        function showAppInterface() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('appNavigation').style.display = 'flex';
+            document.getElementById('scheduleSection').style.display = 'block';
+            
+            // Показываем кнопку админ-панели только для администратора
+            if (currentUser && currentUser.name === adminUser.name) {
+                document.getElementById('adminButton').style.display = 'block';
+                document.getElementById('adminName').textContent = currentUser.name;
+            } else {
+                document.getElementById('adminButton').style.display = 'none';
+            }
+            
+            renderNotes();
+        }
+
+        function toggleAuthMode() {
+            isLoginMode = !isLoginMode;
+            const authTitle = document.getElementById('authTitle');
+            const authButton = document.getElementById('authButton');
+            const authSwitch = document.getElementById('authSwitch');
+            const authPassword = document.getElementById('authPassword');
+            
+            if (isLoginMode) {
+                authTitle.textContent = 'Вход';
+                authButton.textContent = 'Войти';
+                authSwitch.textContent = 'Зарегистрироваться';
+                authPassword.style.display = 'block';
+            } else {
+                authTitle.textContent = 'Регистрация';
+                authButton.textContent = 'Зарегистрироваться';
+                authSwitch.textContent = 'Войти';
+                authPassword.style.display = 'none';
+            }
+        }
+
+        function handleAuth() {
+            const name = document.getElementById('authName').value.trim();
+            const password = document.getElementById('authPassword').value;
+            
+            if (!name) {
+                alert('Введите имя');
+                return;
+            }
+            
+            if (isLoginMode) {
+                // Проверка логина
+                if (name === adminUser.name && password === adminUser.password) {
+                    currentUser = { name: name, isAdmin: true };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    showAppInterface();
+                } else {
+                    alert('Неверное имя пользователя или пароль');
+                }
+            } else {
+                // Регистрация
+                currentUser = { name: name, isAdmin: false };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showAppInterface();
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            showAuthInterface();
+        }
+
+        function loadNotes() {
+            const savedNotes = localStorage.getItem('notes');
+            if (savedNotes) {
+                notes = JSON.parse(savedNotes);
+            }
+        }
+
+        function saveNotes() {
+            localStorage.setItem('notes', JSON.stringify(notes));
+            saveToLocalStorage();
+        }
+
+        function renderNotes() {
+            const notesContent = document.getElementById('notesContent');
+            const adminNotesContent = document.getElementById('adminNotesContent');
+            
+            if (notes.length === 0) {
+                notesContent.innerHTML = '<div class="empty-schedule">Объявлений пока нет</div>';
+                if (adminNotesContent) {
+                    adminNotesContent.innerHTML = '<div class="empty-schedule">Вы еще не создали объявлений</div>';
+                }
+                return;
+            }
+            
+            // Рендеринг объявлений для всех пользователей
+            let html = '';
+            notes.forEach((note, index) => {
+                html += `
+                    <div class="note">
+                        <div class="note-title">${note.title}</div>
+                        <div class="note-content">${note.content}</div>
+                        <div class="note-date">${new Date(note.date).toLocaleDateString()} - ${note.author}</div>
+                    </div>
+                `;
+            });
+            notesContent.innerHTML = html;
+            
+            // Рендеринг объявлений для администратора (только его объявления)
+            if (currentUser && currentUser.name === adminUser.name) {
+                let adminHtml = '';
+                const adminNotes = notes.filter(note => note.author === adminUser.name);
+                
+                if (adminNotes.length === 0) {
+                    adminNotesContent.innerHTML = '<div class="empty-schedule">Вы еще не создали объявлений</div>';
+                } else {
+                    adminNotes.forEach((note, index) => {
+                        adminHtml += `
+                            <div class="note">
+                                <div class="note-title">${note.title}</div>
+                                <div class="note-content">${note.content}</div>
+                                <div class="note-date">${new Date(note.date).toLocaleDateString()}</div>
+                                <button class="logout-button" onclick="deleteNote(${index})" style="margin-top: 10px;">Удалить</button>
+                            </div>
+                        `;
+                    });
+                    adminNotesContent.innerHTML = adminHtml;
+                }
+            }
+        }
+
+        function showNoteForm() {
+            document.getElementById('noteForm').style.display = 'block';
+            document.getElementById('addNoteButton').style.display = 'none';
+        }
+
+        function hideNoteForm() {
+            document.getElementById('noteForm').style.display = 'none';
+            document.getElementById('addNoteButton').style.display = 'block';
+            document.getElementById('noteTitle').value = '';
+            document.getElementById('noteContent').value = '';
+        }
+
+        function addNote() {
+            const title = document.getElementById('noteTitle').value.trim();
+            const content = document.getElementById('noteContent').value.trim();
+            
+            if (!title || !content) {
+                alert('Заполните все поля');
+                return;
+            }
+            
+            const newNote = {
+                title: title,
+                content: content,
+                author: currentUser.name,
+                date: new Date().toISOString()
+            };
+            
+            notes.unshift(newNote); // Добавляем в начало массива
+            saveNotes();
+            renderNotes();
+            hideNoteForm();
+            
+            // Переключаемся на вкладку с объявлениями
+            document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            document.querySelector('[data-section="notes"]').classList.add('active');
+            document.getElementById('notesSection').classList.add('active');
+        }
+
+        function deleteNote(index) {
+            if (confirm('Вы уверены, что хотите удалить это объявление?')) {
+                notes.splice(index, 1);
+                saveNotes();
+                renderNotes();
             }
         }
     </script>
