@@ -1036,19 +1036,25 @@
     <button class="refresh-button" id="refreshButton" title="Обновить расписание">↻</button>
 
     <script>
-        // Конфигурация Firebase
+        // Конфигурация Firebase - ВАША КОНФИГУРАЦИЯ
         const firebaseConfig = {
-            // ЗАМЕНИТЕ НА ВАШУ КОНФИГУРАЦИЮ FIREBASE
             apiKey: "AIzaSyCYVxpEkzR01G1wxt-dMsLv-nqVoIiMOyE",
             authDomain: "raspisanie-fbdfa.firebaseapp.com",
             projectId: "raspisanie-fbdfa",
             storageBucket: "raspisanie-fbdfa.firebasestorage.app",
             messagingSenderId: "462401081461",
-            appId: "1:462401081461:web:f09bb2ab71b3a526bae83c"
+            appId: "1:462401081461:web:f09bb2ab71b3a526bae83c",
+            measurementId: "G-73VTNVX55B"
         };
 
         // Инициализация Firebase
-        firebase.initializeApp(firebaseConfig);
+        try {
+            firebase.initializeApp(firebaseConfig);
+            console.log("Firebase успешно инициализирован");
+        } catch (error) {
+            console.error("Ошибка инициализации Firebase:", error);
+        }
+        
         const db = firebase.firestore();
 
         // Инициализация LocalForage
@@ -1096,6 +1102,8 @@
 
         // Инициализация приложения
         document.addEventListener('DOMContentLoaded', async function() {
+            console.log("Приложение загружается...");
+            
             // Загружаем данные из локального кэша
             await loadFromCache();
             
@@ -1104,7 +1112,7 @@
             if (savedUser) {
                 currentUser = savedUser;
                 showAppInterface();
-                initFirebaseListeners();
+                await initFirebaseListeners();
             } else {
                 showAuthInterface();
             }
@@ -1213,102 +1221,134 @@
 
         // Firebase функции
         async function initFirebaseListeners() {
-            // Слушаем изменения в объявлениях
-            unsubscribeNotes = db.collection('announcements')
-                .orderBy('date', 'desc')
-                .onSnapshot(async (snapshot) => {
-                    const changes = snapshot.docChanges();
-                    let hasChanges = false;
-                    
-                    for (const change of changes) {
-                        if (change.type === 'added' || change.type === 'modified') {
-                            const noteData = change.doc.data();
-                            const noteIndex = notes.findIndex(note => note.id === change.doc.id);
-                            
-                            if (noteIndex === -1) {
-                                notes.push({
-                                    id: change.doc.id,
-                                    ...noteData
-                                });
-                            } else {
-                                notes[noteIndex] = {
-                                    id: change.doc.id,
-                                    ...noteData
-                                };
-                            }
-                            hasChanges = true;
-                        } else if (change.type === 'removed') {
-                            const noteIndex = notes.findIndex(note => note.id === change.doc.id);
-                            if (noteIndex !== -1) {
-                                notes.splice(noteIndex, 1);
+            console.log("Инициализация Firebase listeners...");
+            
+            try {
+                // Слушаем изменения в объявлениях
+                unsubscribeNotes = db.collection('announcements')
+                    .orderBy('date', 'desc')
+                    .onSnapshot(async (snapshot) => {
+                        console.log("Получены изменения в объявлениях:", snapshot.docChanges().length);
+                        const changes = snapshot.docChanges();
+                        let hasChanges = false;
+                        
+                        for (const change of changes) {
+                            if (change.type === 'added' || change.type === 'modified') {
+                                const noteData = change.doc.data();
+                                const noteIndex = notes.findIndex(note => note.id === change.doc.id);
+                                
+                                if (noteIndex === -1) {
+                                    notes.push({
+                                        id: change.doc.id,
+                                        ...noteData
+                                    });
+                                } else {
+                                    notes[noteIndex] = {
+                                        id: change.doc.id,
+                                        ...noteData
+                                    };
+                                }
                                 hasChanges = true;
+                            } else if (change.type === 'removed') {
+                                const noteIndex = notes.findIndex(note => note.id === change.doc.id);
+                                if (noteIndex !== -1) {
+                                    notes.splice(noteIndex, 1);
+                                    hasChanges = true;
+                                }
                             }
                         }
-                    }
-                    
-                    if (hasChanges) {
-                        await saveToCache();
-                        renderNotes();
-                        showSyncStatus('Данные обновлены', 'success');
-                    }
-                }, (error) => {
-                    console.error('Ошибка подписки на объявления:', error);
-                    showSyncStatus('Ошибка синхронизации', 'error');
-                });
+                        
+                        if (hasChanges) {
+                            await saveToCache();
+                            renderNotes();
+                            showSyncStatus('Данные обновлены', 'success');
+                        }
+                    }, (error) => {
+                        console.error('Ошибка подписки на объявления:', error);
+                        showSyncStatus('Ошибка синхронизации', 'error');
+                    });
 
-            // Загружаем расписание из Firebase
-            await loadScheduleFromFirebase();
+                // Загружаем расписание из Firebase
+                await loadScheduleFromFirebase();
+                
+                console.log("Firebase listeners успешно инициализированы");
+            } catch (error) {
+                console.error("Ошибка инициализации Firebase listeners:", error);
+                showSyncStatus('Ошибка подключения', 'error');
+            }
         }
 
         async function loadScheduleFromFirebase() {
             try {
                 showSyncStatus('Загрузка расписания...', 'loading');
+                console.log("Загрузка расписания из Firebase...");
+                
                 const scheduleDoc = await db.collection('settings').doc('schedule').get();
                 
                 if (scheduleDoc.exists) {
                     scheduleData = scheduleDoc.data();
+                    console.log("Расписание загружено из Firebase:", scheduleData);
                     await saveToCache();
                     renderSchedule();
                     showSyncStatus('Расписание загружено', 'success');
                 } else {
+                    console.log("Расписание не найдено в Firebase, создаем начальное...");
                     // Если в Firebase нет расписания, используем локальное и сохраняем в Firebase
-                    await saveScheduleToFirebase();
+                    await saveDefaultScheduleToFirebase();
                 }
             } catch (error) {
                 console.error('Ошибка загрузки расписания:', error);
-                showSyncStatus('Ошибка загрузки', 'error');
+                showSyncStatus('Ошибка загрузки расписания', 'error');
+                
+                // Используем локальное расписание при ошибке
+                await loadDefaultSchedule();
             }
         }
 
-        async function saveScheduleToFirebase() {
+        async function saveDefaultScheduleToFirebase() {
             try {
                 // Используем базовое расписание по умолчанию
                 const defaultSchedule = {
-                    0: { name: "Понедельник", lessons: [
-                        { time: "8:30-10:05", name: "Релейная защита и противоаварийная автоматика", room: "1-8", teacher: "Ниналалов С.А.", type: "лекция" },
-                        { time: "10:15-11:50", name: "Геотермальная энергетика", room: "1-8", teacher: "Алхасова Д.А.", type: "практика" },
-                        { time: "12:20-13:55", name: "Теоретические основы использования ВЭ", room: "1-2лк", teacher: "Алхасова Д.А.", type: "практика" }
-                    ]},
-                    1: { name: "Вторник", lessons: [
-                        { time: "8:30-10:05", name: "Физкультура", room: "Спортзал", teacher: "", week: 1, type: "практика" },
-                        { time: "10:15-11:50", name: "Энергетические сооружения установок нетрадиционной и ВЭ", room: "1-2лк", teacher: "Баба Д.", type: "лекция" },
-                        { time: "12:20-13:55", name: "Теоретические основы использования ВЭ", room: "1-2лк", teacher: "Алхасова Д.А.", week: 0, type: "лекция" }
-                    ]},
-                    2: { name: "Среда", lessons: [
-                        { time: "8:30-10:05", name: "Энергетические сооружения установок нетрадиционной и ВЭ", room: "2-41", teacher: "Баба Д.", week: 1, type: "практика" },
-                        { time: "10:15-11:50", name: "Релейная защита и противоаварийная автоматика", room: "1-2лк", teacher: "Ниналалов С.А.", type: "практика" },
-                        { time: "12:20-13:55", name: "Энергетические сооружения установок нетрадиционной и ВЭ", room: "1-8", teacher: "Баба Д.", type: "семинар" }
-                    ]},
-                    3: { name: "Четверг", lessons: [
-                        { time: "10:15-11:50", name: "Техника высоких напряжений", room: "2-30", teacher: "Шахсинов Г.Ш.", type: "лекция" },
-                        { time: "12:20-13:55", name: "Метрология", room: "2-30", teacher: "Офицерова Н.В.", type: "практика" },
-                        { time: "14:05-15:40", name: "Метрология", room: "2-30", teacher: "Офицерова Н.В.", week: 0, type: "практика" }
-                    ]},
-                    4: { name: "Пятница", lessons: [
-                        { time: "10:15-11:50", name: "Эксплуатация электротех. оборудования ГЭС, ГАЭС", room: "2-30", teacher: "Шахсинов Г.Ш.", type: "лекция" },
-                        { time: "12:20-13:55", name: "Энергетическое оборудование возобновляемой энергетики", room: "2-30", teacher: "Баламирзоев А.Г.", type: "практика" },
-                        { time: "14:05-15:40", name: "Английский язык", room: "1-19", teacher: "Алибекова Д.М.", type: "практика" }
-                    ]},
+                    0: { 
+                        name: "Понедельник", 
+                        lessons: [
+                            { time: "8:30-10:05", name: "Релейная защита и противоаварийная автоматика", room: "1-8", teacher: "Ниналалов С.А.", type: "лекция" },
+                            { time: "10:15-11:50", name: "Геотермальная энергетика", room: "1-8", teacher: "Алхасова Д.А.", type: "практика" },
+                            { time: "12:20-13:55", name: "Теоретические основы использования ВЭ", room: "1-2лк", teacher: "Алхасова Д.А.", type: "практика" }
+                        ]
+                    },
+                    1: { 
+                        name: "Вторник", 
+                        lessons: [
+                            { time: "8:30-10:05", name: "Физкультура", room: "Спортзал", teacher: "", week: 1, type: "практика" },
+                            { time: "10:15-11:50", name: "Энергетические сооружения установок нетрадиционной и ВЭ", room: "1-2лк", teacher: "Баба Д.", type: "лекция" },
+                            { time: "12:20-13:55", name: "Теоретические основы использования ВЭ", room: "1-2лк", teacher: "Алхасова Д.А.", week: 0, type: "лекция" }
+                        ]
+                    },
+                    2: { 
+                        name: "Среда", 
+                        lessons: [
+                            { time: "8:30-10:05", name: "Энергетические сооружения установок нетрадиционной и ВЭ", room: "2-41", teacher: "Баба Д.", week: 1, type: "практика" },
+                            { time: "10:15-11:50", name: "Релейная защита и противоаварийная автоматика", room: "1-2лк", teacher: "Ниналалов С.А.", type: "практика" },
+                            { time: "12:20-13:55", name: "Энергетические сооружения установок нетрадиционной и ВЭ", room: "1-8", teacher: "Баба Д.", type: "семинар" }
+                        ]
+                    },
+                    3: { 
+                        name: "Четверг", 
+                        lessons: [
+                            { time: "10:15-11:50", name: "Техника высоких напряжений", room: "2-30", teacher: "Шахсинов Г.Ш.", type: "лекция" },
+                            { time: "12:20-13:55", name: "Метрология", room: "2-30", teacher: "Офицерова Н.В.", type: "практика" },
+                            { time: "14:05-15:40", name: "Метрология", room: "2-30", teacher: "Офицерова Н.В.", week: 0, type: "практика" }
+                        ]
+                    },
+                    4: { 
+                        name: "Пятница", 
+                        lessons: [
+                            { time: "10:15-11:50", name: "Эксплуатация электротех. оборудования ГЭС, ГАЭС", room: "2-30", teacher: "Шахсинов Г.Ш.", type: "лекция" },
+                            { time: "12:20-13:55", name: "Энергетическое оборудование возобновляемой энергетики", room: "2-30", teacher: "Баламирзоев А.Г.", type: "практика" },
+                            { time: "14:05-15:40", name: "Английский язык", room: "1-19", teacher: "Алибекова Д.М.", type: "практика" }
+                        ]
+                    },
                     5: { name: "Суббота", lessons: [] },
                     6: { name: "Воскресенье", lessons: [] }
                 };
@@ -1316,9 +1356,66 @@
                 await db.collection('settings').doc('schedule').set(defaultSchedule);
                 scheduleData = defaultSchedule;
                 await saveToCache();
+                renderSchedule();
+                showSyncStatus('Создано начальное расписание', 'success');
+                console.log("Начальное расписание сохранено в Firebase");
             } catch (error) {
                 console.error('Ошибка сохранения расписания:', error);
+                showSyncStatus('Ошибка создания расписания', 'error');
             }
+        }
+
+        async function loadDefaultSchedule() {
+            // Используем базовое расписание по умолчанию локально
+            const defaultSchedule = {
+                0: { 
+                    name: "Понедельник", 
+                    lessons: [
+                        { time: "8:30-10:05", name: "Релейная защита и противоаварийная автоматика", room: "1-8", teacher: "Ниналалов С.А.", type: "лекция" },
+                        { time: "10:15-11:50", name: "Геотермальная энергетика", room: "1-8", teacher: "Алхасова Д.А.", type: "практика" },
+                        { time: "12:20-13:55", name: "Теоретические основы использования ВЭ", room: "1-2лк", teacher: "Алхасова Д.А.", type: "практика" }
+                    ]
+                },
+                1: { 
+                    name: "Вторник", 
+                    lessons: [
+                        { time: "8:30-10:05", name: "Физкультура", room: "Спортзал", teacher: "", week: 1, type: "практика" },
+                        { time: "10:15-11:50", name: "Энергетические сооружения установок нетрадиционной и ВЭ", room: "1-2лк", teacher: "Баба Д.", type: "лекция" },
+                        { time: "12:20-13:55", name: "Теоретические основы использования ВЭ", room: "1-2лк", teacher: "Алхасова Д.А.", week: 0, type: "лекция" }
+                    ]
+                },
+                2: { 
+                    name: "Среда", 
+                    lessons: [
+                        { time: "8:30-10:05", name: "Энергетические сооружения установок нетрадиционной и ВЭ", room: "2-41", teacher: "Баба Д.", week: 1, type: "практика" },
+                        { time: "10:15-11:50", name: "Релейная защита и противоаварийная автоматика", room: "1-2лк", teacher: "Ниналалов С.А.", type: "практика" },
+                        { time: "12:20-13:55", name: "Энергетические сооружения установок нетрадиционной и ВЭ", room: "1-8", teacher: "Баба Д.", type: "семинар" }
+                    ]
+                },
+                3: { 
+                    name: "Четверг", 
+                    lessons: [
+                        { time: "10:15-11:50", name: "Техника высоких напряжений", room: "2-30", teacher: "Шахсинов Г.Ш.", type: "лекция" },
+                        { time: "12:20-13:55", name: "Метрология", room: "2-30", teacher: "Офицерова Н.В.", type: "практика" },
+                        { time: "14:05-15:40", name: "Метрология", room: "2-30", teacher: "Офицерова Н.В.", week: 0, type: "практика" }
+                    ]
+                },
+                4: { 
+                    name: "Пятница", 
+                    lessons: [
+                        { time: "10:15-11:50", name: "Эксплуатация электротех. оборудования ГЭС, ГАЭС", room: "2-30", teacher: "Шахсинов Г.Ш.", type: "лекция" },
+                        { time: "12:20-13:55", name: "Энергетическое оборудование возобновляемой энергетики", room: "2-30", teacher: "Баламирзоев А.Г.", type: "практика" },
+                        { time: "14:05-15:40", name: "Английский язык", room: "1-19", teacher: "Алибекова Д.М.", type: "практика" }
+                    ]
+                },
+                5: { name: "Суббота", lessons: [] },
+                6: { name: "Воскресенье", lessons: [] }
+            };
+            
+            scheduleData = defaultSchedule;
+            await saveToCache();
+            renderSchedule();
+            console.log("Используется локальное расписание");
         }
 
         async function addNoteToFirebase(note) {
@@ -1332,6 +1429,7 @@
                 };
                 
                 await db.collection('announcements').add(noteWithData);
+                console.log("Объявление добавлено в Firebase");
                 return true;
             } catch (error) {
                 console.error('Ошибка добавления объявления:', error);
@@ -1342,6 +1440,7 @@
         async function deleteNoteFromFirebase(noteId) {
             try {
                 await db.collection('announcements').doc(noteId).delete();
+                console.log("Объявление удалено из Firebase");
                 return true;
             } catch (error) {
                 console.error('Ошибка удаления объявления:', error);
@@ -1367,6 +1466,7 @@
                 await saveToCache();
                 renderNotes();
                 showSyncStatus('Синхронизация завершена', 'success');
+                console.log("Синхронизация завершена");
             } catch (error) {
                 console.error('Ошибка синхронизации:', error);
                 showSyncStatus('Ошибка синхронизации', 'error');
@@ -1385,6 +1485,7 @@
                 };
                 
                 await localForage.setItem('appData', cacheData);
+                console.log("Данные сохранены в кэш");
             } catch (error) {
                 console.error('Ошибка сохранения в кэш:', error);
             }
@@ -1407,6 +1508,9 @@
                     
                     renderSchedule();
                     renderNotes();
+                    console.log("Данные загружены из кэша");
+                } else {
+                    console.log("Кэш пустой, будет использоваться Firebase");
                 }
             } catch (error) {
                 console.error('Ошибка загрузки из кэша:', error);
@@ -1614,7 +1718,7 @@
                     currentUser = { name: name, isAdmin: true };
                     await localForage.setItem('currentUser', currentUser);
                     showAppInterface();
-                    initFirebaseListeners();
+                    await initFirebaseListeners();
                 } else {
                     alert('Неверное имя пользователя или пароль');
                 }
@@ -1623,7 +1727,7 @@
                 currentUser = { name: name, isAdmin: false };
                 await localForage.setItem('currentUser', currentUser);
                 showAppInterface();
-                initFirebaseListeners();
+                await initFirebaseListeners();
             }
         }
 
