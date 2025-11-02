@@ -1102,12 +1102,21 @@
 
         // Определение текущей недели (чётная/нечётная)
         function getCurrentWeek() {
+            // Начало семестра - 5 февраля 2024 (это была первая неделя)
             const startDate = new Date('2024-02-05');
             const today = new Date();
-            const diffTime = Math.abs(today - startDate);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-            const weekNumber = Math.floor(diffDays / 7) % 2;
-            return weekNumber;
+            
+            // Разница в миллисекундах
+            const diffTime = today - startDate;
+            
+            // Разница в днях
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            // Номер недели (начиная с 0)
+            const weekNumber = Math.floor(diffDays / 7);
+            
+            // Четная (0) или нечетная (1) неделя
+            return weekNumber % 2;
         }
 
         // Определение номера пары по времени
@@ -1125,8 +1134,9 @@
 
         // Глобальные переменные
         let currentWeek = getCurrentWeek();
-        let currentDay = new Date().getDay() - 1;
-        if (currentDay < 0) currentDay = 0;
+        let currentDay = new Date().getDay();
+        // Преобразование: воскресенье (0) -> 6, понедельник (1) -> 0, и т.д.
+        currentDay = currentDay === 0 ? 6 : currentDay - 1;
         
         let currentUser = null;
         let isLoginMode = false;
@@ -1153,8 +1163,8 @@
                 showAuthInterface();
             }
 
-            // Установка индикатора недели
-            document.getElementById('weekIndicator').textContent = `Неделя ${currentWeek + 1}`;
+            // Обновляем индикатор недели и дня
+            updateWeekAndDayIndicator();
             
             // Установка времени последнего обновления
             updateLastUpdatedTime();
@@ -1163,21 +1173,7 @@
             showScheduleReminder();
             
             // Активация текущего дня в навигации
-            const dayButtons = document.querySelectorAll('.day-button');
-            dayButtons.forEach((button, index) => {
-                if (index === currentDay) {
-                    button.classList.add('active');
-                } else {
-                    button.classList.remove('active');
-                }
-                
-                button.addEventListener('click', () => {
-                    dayButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    currentDay = parseInt(button.getAttribute('data-day'));
-                    renderSchedule();
-                });
-            });
+            setupDayNavigation();
             
             // Настройка переключения тем
             const themeButton = document.getElementById('themeButton');
@@ -1263,6 +1259,61 @@
                 changeTheme(savedTheme);
             }
         });
+
+        // Обновление индикатора недели и дня
+        function updateWeekAndDayIndicator() {
+            // Обновляем текущую неделю и день
+            currentWeek = getCurrentWeek();
+            const today = new Date();
+            currentDay = today.getDay();
+            currentDay = currentDay === 0 ? 6 : currentDay - 1;
+            
+            // Обновляем индикатор недели
+            const weekNames = ['Четная', 'Нечетная'];
+            document.getElementById('weekIndicator').textContent = `${weekNames[currentWeek]} неделя`;
+            
+            // Обновляем активный день в навигации
+            const dayButtons = document.querySelectorAll('.day-button');
+            dayButtons.forEach((button, index) => {
+                if (index === currentDay) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+            
+            // Обновляем заголовок дня
+            const dayNames = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+            document.querySelector('.day-title').textContent = dayNames[currentDay];
+            
+            // Перерисовываем расписание
+            renderSchedule();
+        }
+
+        // Настройка навигации по дням
+        function setupDayNavigation() {
+            const dayButtons = document.querySelectorAll('.day-button');
+            const dayNames = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+            
+            dayButtons.forEach((button, index) => {
+                if (index === currentDay) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+                
+                button.addEventListener('click', () => {
+                    dayButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    currentDay = parseInt(button.getAttribute('data-day'));
+                    
+                    // Обновляем заголовок дня
+                    document.querySelector('.day-title').textContent = dayNames[currentDay];
+                    
+                    renderSchedule();
+                });
+            });
+        }
 
         // Firebase функции
         async function initFirebaseListeners() {
@@ -1418,7 +1469,7 @@
                     lessons: [
                         { time: "8:30-10:05", name: "Релейная защита и противоаварийная автоматика", room: "1-8", teacher: "Ниналалов С.А.", type: "лекция" },
                         { time: "10:15-11:50", name: "Геотермальная энергетика", room: "1-8", teacher: "Алхасова Д.А.", type: "практика" },
-                        { time: "12:20-13:55", name: "Теоретические основы использования ВЭ", room: "1-2лк", teacher: "Алхасова Д.А.", type: "практика" }
+                        { time: "12:20-13:55", name: "Теоретические основы использования ВЭ", room: "1-2лк", teacher: "Алхасova Д.А.", type: "практика" }
                     ]
                 },
                 1: { 
@@ -1449,7 +1500,7 @@
                     name: "Пятница", 
                     lessons: [
                         { time: "10:15-11:50", name: "Эксплуатация электротех. оборудования ГЭС, ГАЭС", room: "2-30", teacher: "Шахсинов Г.Ш.", type: "лекция" },
-                        { time: "12:20-13:55", name: "Энергетическое оборудование возобновляемой энергетики", room: "2-30", teacher: "Баламирзоеv А.Г.", type: "практика" },
+                        { time: "12:20-13:55", name: "Энергетическое оборудование возобновляемой энергетики", room: "2-30", teacher: "Баламирзоев А.Г.", type: "практика" },
                         { time: "14:05-15:40", name: "Английский язык", room: "1-19", teacher: "Алибекова Д.М.", type: "практика" }
                     ]
                 },
