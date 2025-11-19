@@ -1315,7 +1315,7 @@
             const hasSeenUpdates = localStorage.getItem('hasSeenUpdates');
             if (!hasSeenUpdates) {
                 document.getElementById('updateModal').style.display = 'flex';
-                localStorage.setItem('hasSeenUpdates', 'true');
+                // НЕ устанавливаем флаг здесь - только когда пользователь закроет окно
             }
             
             // Загружаем данные из локального кэша
@@ -1460,6 +1460,8 @@
         // Закрыть модальное окно с обновлениями
         function closeUpdateModal() {
             document.getElementById('updateModal').style.display = 'none';
+            // Устанавливаем флаг ТОЛЬКО когда пользователь закрывает окно
+            localStorage.setItem('hasSeenUpdates', 'true');
         }
 
         // Обновление индикатора недели и дня
