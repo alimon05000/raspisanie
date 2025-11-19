@@ -13,6 +13,7 @@
     <!-- Подключаем Firebase и LocalForage -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
     
     <style>
@@ -806,6 +807,30 @@
             cursor: pointer;
         }
 
+        /* Стили для загрузки изображений */
+        .image-upload-container {
+            margin-bottom: 15px;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .image-remove {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 5px;
+            display: none;
+        }
+
         /* Оффлайн уведомление */
         .offline-notification {
             position: fixed;
@@ -1143,6 +1168,14 @@
                     <input type="text" class="note-input" id="noteTitle" placeholder="Заголовок заметки">
                     <textarea class="note-textarea" id="noteContent" placeholder="Текст заметки"></textarea>
                     
+                    <!-- Контейнер для загрузки изображений -->
+                    <div class="image-upload-container">
+                        <input type="file" id="noteImage" accept="image/*" style="display: none;">
+                        <button type="button" id="imageUploadButton" class="note-submit" style="background: var(--info);">Добавить изображение</button>
+                        <img id="imagePreview" class="image-preview">
+                        <button type="button" id="imageRemoveButton" class="image-remove">Удалить изображение</button>
+                    </div>
+                    
                     <div class="note-actions">
                         <button class="note-submit" id="noteSubmit">Сохранить</button>
                         <button class="note-cancel" id="noteCancel">Отмена</button>
@@ -1218,6 +1251,7 @@
         }
         
         const db = firebase.firestore();
+        const storage = firebase.storage();
 
         // Инициализация LocalForage
         const localForage = localforage.createInstance({
@@ -1270,15 +1304,18 @@
         let scheduleData = {};
         let userNotes = [];
         let unsubscribeNotes = null;
+        let currentEditingNoteId = null;
+        let selectedImageFile = null;
 
         // Инициализация приложения
         document.addEventListener('DOMContentLoaded', async function() {
             console.log("Приложение загружается...");
             
-            // Показываем окно с обновлениями при первом запуске
+            // Показываем окно с обновлениями только при первом запуске
             const hasSeenUpdates = localStorage.getItem('hasSeenUpdates');
             if (!hasSeenUpdates) {
                 document.getElementById('updateModal').style.display = 'flex';
+                localStorage.setItem('hasSeenUpdates', 'true');
             }
             
             // Загружаем данные из локального кэша
@@ -1355,7 +1392,15 @@
             // Заметки
             document.getElementById('addNoteButton').addEventListener('click', showNoteForm);
             document.getElementById('noteCancel').addEventListener('click', hideNoteForm);
-            document.getElementById('noteSubmit').addEventListener('click', addNote);
+            document.getElementById('noteSubmit').addEventListener('click', saveNote);
+            
+            // Загрузка изображений
+            document.getElementById('imageUploadButton').addEventListener('click', () => {
+                document.getElementById('noteImage').click();
+            });
+            
+            document.getElementById('noteImage').addEventListener('change', handleImageSelect);
+            document.getElementById('imageRemoveButton').addEventListener('click', removeSelectedImage);
             
             // Модальное окно с обновлениями
             document.getElementById('modalClose').addEventListener('click', closeUpdateModal);
@@ -1415,7 +1460,6 @@
         // Закрыть модальное окно с обновлениями
         function closeUpdateModal() {
             document.getElementById('updateModal').style.display = 'none';
-            localStorage.setItem('hasSeenUpdates', 'true');
         }
 
         // Обновление индикатора недели и дня
@@ -1660,12 +1704,23 @@
 
         async function addNoteToFirebase(note) {
             try {
+                // Загружаем изображение, если оно есть
+                let imageUrl = null;
+                if (selectedImageFile) {
+                    imageUrl = await uploadImageToStorage(selectedImageFile);
+                }
+                
                 const noteWithData = {
                     title: note.title,
                     content: note.content,
                     userId: currentUser.id,
                     date: firebase.firestore.FieldValue.serverTimestamp()
                 };
+                
+                // Добавляем URL изображения, если оно было загружено
+                if (imageUrl) {
+                    noteWithData.imageUrl = imageUrl;
+                }
                 
                 const docRef = await db.collection('userNotes').add(noteWithData);
                 console.log("Заметка добавлена в Firebase");
@@ -1678,10 +1733,23 @@
 
         async function updateNoteInFirebase(noteId, note) {
             try {
-                await db.collection('userNotes').doc(noteId).update({
+                // Загружаем новое изображение, если оно есть
+                let imageUrl = note.imageUrl || null;
+                if (selectedImageFile) {
+                    imageUrl = await uploadImageToStorage(selectedImageFile);
+                }
+                
+                const updateData = {
                     title: note.title,
                     content: note.content
-                });
+                };
+                
+                // Добавляем URL изображения, если оно было загружено
+                if (imageUrl) {
+                    updateData.imageUrl = imageUrl;
+                }
+                
+                await db.collection('userNotes').doc(noteId).update(updateData);
                 console.log("Заметка обновлена в Firebase");
                 return true;
             } catch (error) {
@@ -1692,12 +1760,45 @@
 
         async function deleteNoteFromFirebase(noteId) {
             try {
+                // Получаем заметку для удаления изображения, если оно есть
+                const noteDoc = await db.collection('userNotes').doc(noteId).get();
+                if (noteDoc.exists) {
+                    const noteData = noteDoc.data();
+                    // Удаляем изображение из хранилища, если оно есть
+                    if (noteData.imageUrl) {
+                        await deleteImageFromStorage(noteData.imageUrl);
+                    }
+                }
+                
                 await db.collection('userNotes').doc(noteId).delete();
                 console.log("Заметка удалена из Firebase");
                 return true;
             } catch (error) {
                 console.error('Ошибка удаления заметки:', error);
                 return false;
+            }
+        }
+
+        async function uploadImageToStorage(file) {
+            try {
+                const fileName = `note_images/${currentUser.id}/${Date.now()}_${file.name}`;
+                const storageRef = storage.ref().child(fileName);
+                const snapshot = await storageRef.put(file);
+                const downloadURL = await snapshot.ref.getDownloadURL();
+                return downloadURL;
+            } catch (error) {
+                console.error('Ошибка загрузки изображения:', error);
+                return null;
+            }
+        }
+
+        async function deleteImageFromStorage(imageUrl) {
+            try {
+                const imageRef = storage.refFromURL(imageUrl);
+                await imageRef.delete();
+                console.log("Изображение удалено из хранилища");
+            } catch (error) {
+                console.error('Ошибка удаления изображения:', error);
             }
         }
 
@@ -1920,11 +2021,13 @@
             let html = '';
             userNotes.forEach((note, index) => {
                 const noteDate = note.date ? new Date(note.date.seconds ? note.date.seconds * 1000 : note.date) : new Date();
+                const imageHtml = note.imageUrl ? `<img src="${note.imageUrl}" class="image-preview" style="display: block; max-width: 100%; margin-top: 10px;">` : '';
                 
                 html += `
                     <div class="note">
                         <div class="note-title">${note.title}</div>
                         <div class="note-content">${note.content}</div>
+                        ${imageHtml}
                         <div class="note-date">${noteDate.toLocaleDateString()}</div>
                         <button class="logout-button" onclick="editNote('${note.id}')" style="margin-top: 10px; margin-right: 10px;">Редактировать</button>
                         <button class="logout-button" onclick="deleteNote('${note.id}')" style="margin-top: 10px;">Удалить</button>
@@ -1940,16 +2043,51 @@
             document.getElementById('noteTitle').value = '';
             document.getElementById('noteContent').value = '';
             document.getElementById('noteSubmit').textContent = 'Сохранить';
-            // Устанавливаем правильный обработчик
-            document.getElementById('noteSubmit').onclick = addNote;
+            document.getElementById('noteSubmit').onclick = saveNote;
+            
+            // Сбрасываем состояние формы
+            currentEditingNoteId = null;
+            resetImageForm();
         }
 
         function hideNoteForm() {
             document.getElementById('noteForm').style.display = 'none';
             document.getElementById('addNoteButton').style.display = 'block';
+            
+            // Сбрасываем состояние формы
+            currentEditingNoteId = null;
+            resetImageForm();
         }
 
-        async function addNote() {
+        function handleImageSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreview').style.display = 'block';
+                    document.getElementById('imageRemoveButton').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+                selectedImageFile = file;
+            }
+        }
+
+        function removeSelectedImage() {
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('imageRemoveButton').style.display = 'none';
+            document.getElementById('noteImage').value = '';
+            selectedImageFile = null;
+        }
+
+        function resetImageForm() {
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('imageRemoveButton').style.display = 'none';
+            document.getElementById('noteImage').value = '';
+            selectedImageFile = null;
+        }
+
+        async function saveNote() {
             const title = document.getElementById('noteTitle').value.trim();
             const content = document.getElementById('noteContent').value.trim();
             
@@ -1958,32 +2096,92 @@
                 return;
             }
             
-            const newNote = {
+            const noteData = {
                 title: title,
-                content: content,
-                userId: currentUser.id,
-                date: new Date().toISOString()
+                content: content
             };
             
-            // Сохраняем в Firebase
-            const noteId = await addNoteToFirebase(newNote);
+            let success = false;
             
-            if (noteId) {
-                // При успешном сохранении в Firebase, добавляем в локальный список
-                newNote.id = noteId;
-                userNotes.unshift(newNote);
-                await saveToCache();
-                renderNotes();
-                hideNoteForm();
-                showSyncStatus('Заметка сохранена', 'success');
+            if (currentEditingNoteId) {
+                // Редактирование существующей заметки
+                success = await updateNoteInFirebase(currentEditingNoteId, noteData);
+                
+                if (success) {
+                    // При успешном обновлении в Firebase, обновляем локально
+                    const noteIndex = userNotes.findIndex(n => n.id === currentEditingNoteId);
+                    if (noteIndex !== -1) {
+                        userNotes[noteIndex].title = title;
+                        userNotes[noteIndex].content = content;
+                        
+                        // Обновляем URL изображения, если оно было загружено
+                        if (selectedImageFile) {
+                            const imageUrl = await uploadImageToStorage(selectedImageFile);
+                            if (imageUrl) {
+                                userNotes[noteIndex].imageUrl = imageUrl;
+                            }
+                        }
+                        
+                        await saveToCache();
+                        renderNotes();
+                        hideNoteForm();
+                        showSyncStatus('Заметка обновлена', 'success');
+                    }
+                } else {
+                    // Если ошибка Firebase, обновляем локально
+                    const noteIndex = userNotes.findIndex(n => n.id === currentEditingNoteId);
+                    if (noteIndex !== -1) {
+                        userNotes[noteIndex].title = title;
+                        userNotes[noteIndex].content = content;
+                        await saveToCache();
+                        renderNotes();
+                        hideNoteForm();
+                        showSyncStatus('Обновлено локально (ошибка сети)', 'warning');
+                    }
+                }
             } else {
-                // Если ошибка Firebase, сохраняем локально
-                newNote.id = 'local_' + Date.now();
-                userNotes.unshift(newNote);
-                await saveToCache();
-                renderNotes();
-                hideNoteForm();
-                showSyncStatus('Сохранено локально (ошибка сети)', 'warning');
+                // Создание новой заметки
+                const noteId = await addNoteToFirebase(noteData);
+                
+                if (noteId) {
+                    // При успешном сохранении в Firebase, добавляем в локальный список
+                    const newNote = {
+                        id: noteId,
+                        title: title,
+                        content: content,
+                        userId: currentUser.id,
+                        date: new Date().toISOString()
+                    };
+                    
+                    // Добавляем URL изображения, если оно было загружено
+                    if (selectedImageFile) {
+                        const imageUrl = await uploadImageToStorage(selectedImageFile);
+                        if (imageUrl) {
+                            newNote.imageUrl = imageUrl;
+                        }
+                    }
+                    
+                    userNotes.unshift(newNote);
+                    await saveToCache();
+                    renderNotes();
+                    hideNoteForm();
+                    showSyncStatus('Заметка сохранена', 'success');
+                } else {
+                    // Если ошибка Firebase, сохраняем локально
+                    const newNote = {
+                        id: 'local_' + Date.now(),
+                        title: title,
+                        content: content,
+                        userId: currentUser.id,
+                        date: new Date().toISOString()
+                    };
+                    
+                    userNotes.unshift(newNote);
+                    await saveToCache();
+                    renderNotes();
+                    hideNoteForm();
+                    showSyncStatus('Сохранено локально (ошибка сети)', 'warning');
+                }
             }
         }
 
@@ -1996,48 +2194,19 @@
             document.getElementById('noteForm').style.display = 'block';
             document.getElementById('addNoteButton').style.display = 'none';
             document.getElementById('noteSubmit').textContent = 'Обновить';
-            document.getElementById('noteSubmit').onclick = () => updateNote(noteId);
-        }
-
-        async function updateNote(noteId) {
-            const title = document.getElementById('noteTitle').value.trim();
-            const content = document.getElementById('noteContent').value.trim();
+            document.getElementById('noteSubmit').onclick = saveNote;
             
-            if (!title || !content) {
-                alert('Заполните все поля');
-                return;
-            }
+            // Устанавливаем текущую редактируемую заметку
+            currentEditingNoteId = noteId;
             
-            const updatedNote = {
-                title: title,
-                content: content
-            };
-            
-            // Обновляем в Firebase
-            const success = await updateNoteInFirebase(noteId, updatedNote);
-            
-            if (success) {
-                // При успешном обновлении в Firebase, обновляем локально
-                const noteIndex = userNotes.findIndex(n => n.id === noteId);
-                if (noteIndex !== -1) {
-                    userNotes[noteIndex].title = title;
-                    userNotes[noteIndex].content = content;
-                    await saveToCache();
-                    renderNotes();
-                    hideNoteForm();
-                    showSyncStatus('Заметка обновлена', 'success');
-                }
+            // Если у заметки есть изображение, показываем его
+            if (note.imageUrl) {
+                document.getElementById('imagePreview').src = note.imageUrl;
+                document.getElementById('imagePreview').style.display = 'block';
+                document.getElementById('imageRemoveButton').style.display = 'block';
+                selectedImageFile = null; // Не перезаписываем существующее изображение
             } else {
-                // Если ошибка Firebase, обновляем локально
-                const noteIndex = userNotes.findIndex(n => n.id === noteId);
-                if (noteIndex !== -1) {
-                    userNotes[noteIndex].title = title;
-                    userNotes[noteIndex].content = content;
-                    await saveToCache();
-                    renderNotes();
-                    hideNoteForm();
-                    showSyncStatus('Обновлено локально (ошибка сети)', 'warning');
-                }
+                resetImageForm();
             }
         }
 
