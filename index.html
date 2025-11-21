@@ -20,6 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.38/dist/index.js"></script>
     
     <style>
+        /* Все стили остаются без изменений */
         :root {
             --primary: #0076f6;
             --secondary: #6c757d;
@@ -1436,6 +1437,8 @@
             </div>
             <p id="aiProgressText">Подготовка модели (0%)</p>
             <small>Это может занять несколько минут при первом запуске</small>
+            <br>
+            <button class="logout-button" onclick="cancelAILoading()" style="margin-top: 15px;">Отменить загрузку</button>
         </div>
     </div>
     
@@ -1563,7 +1566,7 @@
                 <div class="chat-messages" id="chatMessages">
                     <!-- Сообщения чата будут здесь -->
                     <div class="message ai-message">
-                        Привет! Я ваш AI помощник на основе модели Qwen2-0.5B. Я могу помочь вам с вопросами о расписании, заметках и календаре, а также ответить на учебные вопросы. Чем могу помочь?
+                        Привет! Я ваш AI помощник. Я могу помочь вам с вопросами о расписании, заметках и календаре. Чем могу помочь?
                     </div>
                 </div>
                 <div class="typing-indicator" id="typingIndicator">
@@ -1625,25 +1628,20 @@
         let engine = null;
         let isAILoaded = false;
         let isAILoading = false;
+        let aiLoadingCancelled = false;
 
         // Определение текущей недели (1 или 2)
         function getCurrentWeek() {
-            // Начало семестра - 4 ноября 2024
             const startDate = new Date('2025-09-01');
             const today = new Date();
             
-            // Устанавливаем время на 00:00:00 для точного расчета
             startDate.setHours(0, 0, 0, 0);
             today.setHours(0, 0, 0, 0);
             
-            // Разница в дняс
             const diffTime = today - startDate;
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            
-            // Номер недели (начинаем с 1)
             const weekNumber = Math.floor(diffDays / 7);
             
-            // Чередование недель 1 и 2
             return (weekNumber % 2) + 1;
         }
 
@@ -1663,14 +1661,12 @@
         // Глобальные переменные
         let currentWeek = getCurrentWeek();
         let currentDay = new Date().getDay();
-        // Преобразование: воскресенье (0) -> 6, понедельник (1) -> 0, и т.д.
         currentDay = currentDay === 0 ? 6 : currentDay - 1;
         
         let currentUser = null;
         let scheduleData = {};
         let userNotes = [];
         let userEvents = [];
-        let unsubscribeNotes = null;
         let currentEditingNoteId = null;
         let selectedImageFile = null;
         
@@ -1811,8 +1807,10 @@
                 changeTheme(savedTheme);
             }
             
-            // Инициализация AI помощника
-            initAIAssistant();
+            // Инициализация AI помощника с задержкой
+            setTimeout(() => {
+                initAIAssistant();
+            }, 2000);
         });
 
         // Инициализация AI помощника с WebLLM
@@ -1820,6 +1818,7 @@
             if (isAILoading || isAILoaded) return;
             
             isAILoading = true;
+            aiLoadingCancelled = false;
             const aiLoading = document.getElementById('aiLoading');
             const aiProgressBar = document.getElementById('aiProgressBar');
             const aiProgressText = document.getElementById('aiProgressText');
@@ -1835,34 +1834,50 @@
                 // Показываем индикатор загрузки
                 aiLoading.style.display = 'flex';
                 
-                // Инициализация WebLLM
+                // Проверяем поддержку WebGPU
+                if (!navigator.gpu) {
+                    throw new Error("WebGPU не поддерживается в этом браузере");
+                }
+
+                // Инициализация WebLLM с улучшенной обработкой ошибок
                 const initProgressCallback = (report) => {
+                    if (aiLoadingCancelled) return;
+                    
                     console.log("Прогресс загрузки:", report);
                     const progress = report.progress * 100;
                     aiProgressBar.style.width = `${progress}%`;
-                    aiProgressText.textContent = `Загрузка модели (${Math.round(progress)}%)`;
                     
                     if (report.text) {
                         aiProgressText.textContent = report.text;
+                    } else {
+                        aiProgressText.textContent = `Загрузка модели (${Math.round(progress)}%)`;
                     }
                 };
+
+                // Используем более простую модель для лучшей совместимости
+                const model = "Qwen2-0.5B-Instruct-q4f32_1-MLC";
                 
-                // Создаем движок с моделью Qwen2-0.5B
-                engine = await webllm.CreateWebLLMEngine(
-                    "Qwen2-0.5B-Instruct-q4f32_1-MLC", 
-                    { 
-                        initProgressCallback: initProgressCallback,
-                        appConfig: {
-                            model_list: [
-                                {
-                                    "model_url": "https://huggingface.co/mlc-ai/Qwen2-0.5B-Instruct-q4f32_1-MLC/resolve/main/",
-                                    "local_id": "Qwen2-0.5B-Instruct-q4f32_1-MLC",
-                                    "model_lib_url": "https://raw.githubusercontent.com/mlc-ai/binary-mlc-llm-libs/main/qwen2-0.5b-instruct-q4f32_1-webgpu.wasm"
-                                }
-                            ]
-                        }
+                console.log("Начинаем загрузку модели:", model);
+                
+                // Создаем движок с улучшенной обработкой ошибок
+                engine = await webllm.CreateWebLLMEngine(model, { 
+                    initProgressCallback: initProgressCallback,
+                    appConfig: {
+                        model_list: [
+                            {
+                                "model_url": "https://huggingface.co/mlc-ai/Qwen2-0.5B-Instruct-q4f32_1-MLC/resolve/main/",
+                                "local_id": "Qwen2-0.5B-Instruct-q4f32_1-MLC",
+                                "model_lib_url": "https://raw.githubusercontent.com/mlc-ai/binary-mlc-llm-libs/main/qwen2-0.5b-instruct-q4f32_1-webgpu.wasm",
+                                "vram_required_MB": 2048
+                            }
+                        ]
                     }
-                );
+                });
+                
+                if (aiLoadingCancelled) {
+                    console.log("Загрузка AI отменена пользователем");
+                    return;
+                }
                 
                 isAILoaded = true;
                 isAILoading = false;
@@ -1880,7 +1895,7 @@
                 chatInput.placeholder = "Введите ваш вопрос...";
                 
                 console.log("AI помощник успешно инициализирован");
-                addMessageToChat("AI помощник готов к работе! Теперь я могу отвечать на ваши вопросы с помощью модели Qwen2-0.5B.", 'ai');
+                addMessageToChat("✅ AI помощник готов к работе! Теперь я могу отвечать на ваши вопросы с помощью модели Qwen2-0.5B.", 'ai');
                 
             } catch (error) {
                 console.error("Ошибка инициализации AI помощника:", error);
@@ -1889,17 +1904,44 @@
                 // Скрываем индикатор загрузки
                 aiLoading.style.display = 'none';
                 
-                // Обновляем статус
-                aiStatusButton.textContent = "AI: Ошибка";
+                // Обновляем статус в зависимости от типа ошибки
+                if (error.message.includes("WebGPU") || error.message.includes("gpu")) {
+                    aiStatusButton.textContent = "AI: WebGPU недоступен";
+                    addMessageToChat("❌ WebGPU не поддерживается в вашем браузере. AI функции недоступны. Пожалуйста, используйте Chrome, Edge или Safari последних версий.", 'ai');
+                } else if (error.message.includes("отменена") || aiLoadingCancelled) {
+                    aiStatusButton.textContent = "AI: Загрузка отменена";
+                    addMessageToChat("Загрузка AI модели была отменена. Буду использовать базовый режим ответов.", 'ai');
+                } else {
+                    aiStatusButton.textContent = "AI: Ошибка загрузки";
+                    addMessageToChat("❌ Не удалось загрузить AI модель. Буду использовать базовый режим ответов.", 'ai');
+                }
+                
                 aiStatusButton.style.background = "var(--danger)";
                 
                 // Активируем поле ввода с ограничениями
                 chatInput.disabled = false;
                 chatSend.disabled = false;
                 chatInput.placeholder = "AI не загружен, используется базовый режим";
-                
-                addMessageToChat("К сожалению, не удалось загрузить AI модель. Буду использовать базовый режим ответов.", 'ai');
             }
+        }
+
+        // Функция отмены загрузки AI
+        function cancelAILoading() {
+            aiLoadingCancelled = true;
+            isAILoading = false;
+            document.getElementById('aiLoading').style.display = 'none';
+            
+            const aiStatusButton = document.getElementById('aiStatusButton');
+            aiStatusButton.textContent = "AI: Загрузка отменена";
+            aiStatusButton.style.background = "var(--danger)";
+            
+            const chatInput = document.getElementById('chatInput');
+            const chatSend = document.getElementById('chatSend');
+            chatInput.disabled = false;
+            chatSend.disabled = false;
+            chatInput.placeholder = "AI не загружен, используется базовый режим";
+            
+            addMessageToChat("Загрузка AI модели отменена. Буду использовать базовый режим ответов.", 'ai');
         }
 
         // Показать раздел
@@ -1929,9 +1971,11 @@
             } else if (section === 'chat') {
                 buttons[3].classList.add('active');
                 
-                // Если AI еще не загружен, пытаемся загрузить
+                // Если AI еще не загружен и не загружается, пытаемся загрузить
                 if (!isAILoaded && !isAILoading) {
-                    initAIAssistant();
+                    setTimeout(() => {
+                        initAIAssistant();
+                    }, 500);
                 }
             }
             
@@ -3006,8 +3050,9 @@
                 throw new Error("AI движок не загружен");
             }
             
-            // Создаем промпт для модели
-            const context = `
+            try {
+                // Создаем промпт для модели
+                const context = `
 Ты - полезный AI помощник для студента. Ты помогаешь с вопросами о расписании занятий, заметках и календаре.
 Текущая информация о расписании:
 - Сегодня ${new Date().toLocaleDateString('ru-RU')}
@@ -3016,26 +3061,28 @@
 
 Отвечай кратко и по делу. Если вопрос не связан с учебой, вежливо откажись отвечать, объяснив свою специализацию.
 `;
-            
-            const fullPrompt = `${context}\n\nВопрос пользователя: ${userMessage}\n\nОтвет:`;
-            
-            // Генерируем ответ с помощью WebLLM
-            const response = await engine.chat.completions.create({
-                messages: [
-                    {
-                        "role": "system",
-                        "content": "Ты полезный AI помощник для студента. Отвечай кратко и информативно."
-                    },
-                    {
-                        "role": "user", 
-                        "content": fullPrompt
-                    }
-                ],
-                temperature: 0.7,
-                max_tokens: 500
-            });
-            
-            return response.choices[0].message.content;
+                
+                const response = await engine.chat.completions.create({
+                    messages: [
+                        {
+                            "role": "system",
+                            "content": "Ты полезный AI помощник для студента. Отвечай кратко и информативно."
+                        },
+                        {
+                            "role": "user", 
+                            "content": userMessage
+                        }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 500
+                });
+                
+                return response.choices[0].message.content;
+            } catch (error) {
+                console.error("Ошибка WebLLM:", error);
+                // Если WebLLM выдает ошибку, используем базовый режим
+                return await getAIResponse(userMessage);
+            }
         }
 
         async function getAIResponse(userMessage) {
@@ -3223,6 +3270,7 @@
             }
         }
 
+
         // Глобальные функции для использования в HTML
         window.deleteNote = deleteNote;
         window.editNote = editNote;
@@ -3231,6 +3279,7 @@
         window.deleteCalendarEvent = deleteCalendarEvent;
         window.newChat = newChat;
         window.clearChat = clearChat;
+        window.cancelAILoading = cancelAILoading;
     </script>
 </body>
 </html>
