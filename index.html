@@ -76,11 +76,11 @@
 
         .theme-galaxy {
             --background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-            --card-bg: rgba(255, 255, 255, 0.1);
-            --card-shadow: rgba(0, 0, 0, 0.3);
-            --text: rgba(255,255,255,.92);
+            --card-bg: rgba(255, 255, 255, 0.15);
+            --card-shadow: rgba(0, 0, 0, 0.4);
+            --text: rgba(255,255,255,.95);
             --primary: #9D4EDD;
-            --secondary: rgba(255,255,255,.7);
+            --secondary: rgba(255,255,255,.8);
             --border-radius: 20px;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
@@ -129,8 +129,8 @@
         }
 
         .theme-galaxy .parallax-bg {
-            background: radial-gradient(circle at 30% 40%, rgba(157, 78, 221, 0.3) 0%, rgba(77, 25, 127, 0.2) 40%, rgba(0, 0, 0, 0) 70%),
-                        radial-gradient(circle at 70% 60%, rgba(255, 107, 107, 0.2) 0%, rgba(214, 93, 177, 0.1) 30%, rgba(0, 0, 0, 0) 60%),
+            background: radial-gradient(circle at 30% 40%, rgba(157, 78, 221, 0.4) 0%, rgba(77, 25, 127, 0.3) 40%, rgba(0, 0, 0, 0) 70%),
+                        radial-gradient(circle at 70% 60%, rgba(255, 107, 107, 0.3) 0%, rgba(214, 93, 177, 0.2) 30%, rgba(0, 0, 0, 0) 60%),
                         linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
         }
 
@@ -193,12 +193,12 @@
         }
 
         .theme-galaxy .week-indicator {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .theme-selector {
@@ -229,12 +229,12 @@
         }
 
         .theme-galaxy .theme-button {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .theme-options {
@@ -265,7 +265,7 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
         .theme-option {
@@ -332,12 +332,12 @@
         }
 
         .theme-galaxy .nav-button {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .nav-button.active {
@@ -404,12 +404,12 @@
         }
 
         .theme-galaxy .day-button {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .day-button.active {
@@ -446,12 +446,12 @@
         }
 
         .theme-galaxy .schedule-container {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
         .day-title {
@@ -486,7 +486,7 @@
         }
 
         .theme-galaxy .lesson {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 30px rgba(0,0,0,0.2);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -534,6 +534,19 @@
 
         .theme-galaxy .lesson-time {
             color: #9D4EDD;
+        }
+
+        .time-remaining {
+            font-size: 0.8rem;
+            background: rgba(0,0,0,0.1);
+            padding: 2px 6px;
+            border-radius: 8px;
+            margin-left: 5px;
+        }
+
+        .theme-galaxy .time-remaining {
+            background: rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.9);
         }
 
         .lesson-name {
@@ -602,6 +615,10 @@
             color: rgba(0, 0, 0, 0.7);
         }
 
+        .theme-galaxy .lesson-details {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
         .lesson-detail {
             display: flex;
             align-items: center;
@@ -637,11 +654,11 @@
         }
 
         .theme-galaxy .notes-container {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
         .notes-title {
@@ -672,7 +689,7 @@
         }
 
         .theme-galaxy .note {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 30px rgba(0,0,0,0.2);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -696,6 +713,163 @@
             font-size: 0.8rem;
             color: var(--secondary);
             text-align: right;
+        }
+
+        /* Стили для календаря */
+        .calendar-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 10px 30px var(--card-shadow);
+            margin-bottom: 30px;
+        }
+
+        .theme-glass .calendar-container {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .theme-galaxy .calendar-container {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .calendar-nav-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 600;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            background: rgba(0,0,0,0.03);
+        }
+
+        .theme-glass .calendar-day {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-galaxy .calendar-day {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .calendar-day:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .calendar-day.today {
+            background: var(--primary);
+            color: white;
+            font-weight: bold;
+        }
+
+        .calendar-day.other-month {
+            color: var(--secondary);
+            opacity: 0.5;
+        }
+
+        .calendar-events {
+            margin-top: 20px;
+        }
+
+        .calendar-event {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.03);
+            border-left: 3px solid var(--primary);
+        }
+
+        .theme-glass .calendar-event {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-galaxy .calendar-event {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .event-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .event-time {
+            font-size: 0.8rem;
+            color: var(--secondary);
+        }
+
+        .add-event-button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: var(--success);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .theme-glass .add-event-button {
+            background: #30D158;
+        }
+
+        .theme-galaxy .add-event-button {
+            background: #9D4EDD;
         }
 
         /* Стили для создания заметок */
@@ -856,11 +1030,11 @@
         }
         
         .theme-galaxy .offline-notification {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255, 255, 255, 0.95);
         }
         
         /* Кнопка обновления */
@@ -938,116 +1112,6 @@
             -webkit-backdrop-filter: blur(10px);
         }
 
-        /* Всплывающее окно с обновлениями */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 25px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .theme-glass .modal-content {
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.25);
-        }
-
-        .theme-galaxy .modal-content {
-            background: rgba(30, 30, 60, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text);
-        }
-
-        .update-list {
-            list-style-type: none;
-            margin-bottom: 20px;
-        }
-
-        .update-item {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .theme-glass .update-item {
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .theme-galaxy .update-item {
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .update-icon {
-            font-size: 1.2rem;
-            margin-top: 2px;
-        }
-
-        .modal-footer {
-            text-align: center;
-        }
-
-        .modal-button {
-            padding: 12px 24px;
-            border-radius: 10px;
-            border: none;
-            background: var(--primary);
-            color: white;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .theme-glass .modal-button {
-            background: #7b68ee;
-        }
-
-        .theme-galaxy .modal-button {
-            background: #9D4EDD;
-        }
-
         @media (max-width: 480px) {
             .app-container {
                 padding: 15px;
@@ -1071,11 +1135,11 @@
                 font-size: 1rem;
             }
 
-            .schedule-container, .notes-container {
+            .schedule-container, .notes-container, .calendar-container {
                 padding: 16px;
             }
 
-            .theme-glass .schedule-container, .theme-glass .notes-container {
+            .theme-glass .schedule-container, .theme-glass .notes-container, .theme-glass .calendar-container {
                 padding: 16px;
             }
         }
@@ -1086,11 +1150,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .schedule-container, .notes-container {
+        .schedule-container, .notes-container, .calendar-container {
             animation: fadeIn 0.5s ease;
         }
 
-        .lesson, .note {
+        .lesson, .note, .calendar-event {
             animation: fadeIn 0.5s ease;
             animation-fill-mode: both;
         }
@@ -1136,6 +1200,7 @@
         <div class="app-navigation">
             <button class="nav-button active" onclick="showSection('schedule')">Расписание</button>
             <button class="nav-button" onclick="showSection('notes')">Мои заметки</button>
+            <button class="nav-button" onclick="showSection('calendar')">Календарь</button>
         </div>
 
         <!-- Раздел расписания -->
@@ -1188,6 +1253,30 @@
             </div>
         </div>
 
+        <!-- Раздел календаря -->
+        <div class="section" id="calendarSection">
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <h2 class="calendar-title" id="calendarTitle">Январь 2024</h2>
+                    <div class="calendar-nav">
+                        <button class="calendar-nav-button" id="prevMonth">‹</button>
+                        <button class="calendar-nav-button" id="nextMonth">›</button>
+                    </div>
+                </div>
+                
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Календарь будет сгенерирован здесь -->
+                </div>
+                
+                <div class="calendar-events" id="calendarEvents">
+                    <h3>События на выбранную дату</h3>
+                    <!-- События будут отображены здесь -->
+                </div>
+                
+                <button class="add-event-button" id="addEventButton">Добавить событие</button>
+            </div>
+        </div>
+
         <footer>
             Обновляется автоматически • <span id="lastUpdated"></span>
         </footer>
@@ -1198,37 +1287,6 @@
     </div>
     
     <button class="refresh-button" id="refreshButton" title="Обновить расписание">↻</button>
-
-    <!-- Всплывающее окно с обновлениями -->
-    <div class="modal-overlay" id="updateModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Что нового в приложении</h2>
-                <button class="modal-close" id="modalClose">✕</button>
-            </div>
-            <ul class="update-list">
-                <li class="update-item">
-                    <span class="update-icon">📝</span>
-                    <span>Добавлена система персональных заметок - теперь каждый пользователь может создавать свои собственные заметки</span>
-                </li>
-                <li class="update-item">
-                    <span class="update-icon">🎨</span>
-                    <span>Добавлена новая тема оформления "Галактика" с завораживающим градиентом</span>
-                </li>
-                <li class="update-item">
-                    <span class="update-icon">🏠</span>
-                    <span>Обновлен интерфейс - теперь есть главное меню для удобной навигации между разделами</span>
-                </li>
-                <li class="update-item">
-                    <span class="update-icon">👨‍🏫</span>
-                    <span>Обновлены данные преподавателей в расписании</span>
-                </li>
-            </ul>
-            <div class="modal-footer">
-                <button class="modal-button" id="modalButton">Понятно</button>
-            </div>
-        </div>
-    </div>
 
     <script>
         // Конфигурация Firebase
@@ -1303,20 +1361,18 @@
         let currentUser = null;
         let scheduleData = {};
         let userNotes = [];
+        let userEvents = [];
         let unsubscribeNotes = null;
         let currentEditingNoteId = null;
         let selectedImageFile = null;
+        
+        // Переменные для календаря
+        let currentCalendarDate = new Date();
+        let selectedCalendarDate = new Date();
 
         // Инициализация приложения
         document.addEventListener('DOMContentLoaded', async function() {
             console.log("Приложение загружается...");
-            
-            // Показываем окно с обновлениями только при первом запуске
-            const hasSeenUpdates = localStorage.getItem('hasSeenUpdates');
-            if (!hasSeenUpdates) {
-                document.getElementById('updateModal').style.display = 'flex';
-                // НЕ устанавливаем флаг здесь - только когда пользователь закроет окно
-            }
             
             // Загружаем данные из локального кэша
             await loadFromCache();
@@ -1402,12 +1458,22 @@
             document.getElementById('noteImage').addEventListener('change', handleImageSelect);
             document.getElementById('imageRemoveButton').addEventListener('click', removeSelectedImage);
             
-            // Модальное окно с обновлениями
-            document.getElementById('modalClose').addEventListener('click', closeUpdateModal);
-            document.getElementById('modalButton').addEventListener('click', closeUpdateModal);
+            // Календарь
+            document.getElementById('prevMonth').addEventListener('click', () => {
+                currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+                renderCalendar();
+            });
             
-            // Первоначальная отрисовка расписания
+            document.getElementById('nextMonth').addEventListener('click', () => {
+                currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+                renderCalendar();
+            });
+            
+            document.getElementById('addEventButton').addEventListener('click', addCalendarEvent);
+            
+            // Первоначальная отрисовка расписания и календаря
             renderSchedule();
+            renderCalendar();
             
             // Запуск таймера для отслеживания времени до конца пары
             startTimer();
@@ -1443,10 +1509,14 @@
             });
             
             // Сделать активной кнопку текущего раздела
+            const buttons = document.querySelectorAll('.nav-button');
             if (section === 'schedule') {
-                document.querySelector('.nav-button:nth-child(1)').classList.add('active');
+                buttons[0].classList.add('active');
             } else if (section === 'notes') {
-                document.querySelector('.nav-button:nth-child(2)').classList.add('active');
+                buttons[1].classList.add('active');
+            } else if (section === 'calendar') {
+                buttons[2].classList.add('active');
+                renderCalendar();
             }
             
             // Загрузить данные для секции
@@ -1455,13 +1525,6 @@
             } else if (section === 'schedule') {
                 renderSchedule();
             }
-        }
-
-        // Закрыть модальное окно с обновлениями
-        function closeUpdateModal() {
-            document.getElementById('updateModal').style.display = 'none';
-            // Устанавливаем флаг ТОЛЬКО когда пользователь закрывает окно
-            localStorage.setItem('hasSeenUpdates', 'true');
         }
 
         // Обновление индикатора недели и дня
@@ -1528,6 +1591,9 @@
                 
                 // Загружаем заметки пользователя
                 await loadUserNotes();
+                
+                // Загружаем события календаря
+                await loadUserEvents();
                 
                 console.log("Firebase listeners успешно инициализированы");
             } catch (error) {
@@ -1704,6 +1770,33 @@
             }
         }
 
+        async function loadUserEvents() {
+            try {
+                if (!currentUser) return;
+                
+                const eventsSnapshot = await db.collection('userEvents')
+                    .where('userId', '==', currentUser.id)
+                    .get();
+                
+                userEvents = eventsSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                
+                await saveToCache();
+                renderCalendarEvents();
+                console.log("События пользователя загружены");
+            } catch (error) {
+                console.error('Ошибка загрузки событий:', error);
+                // Используем локальные события при ошибке
+                const cachedEvents = await localForage.getItem('userEvents');
+                if (cachedEvents) {
+                    userEvents = cachedEvents;
+                    renderCalendarEvents();
+                }
+            }
+        }
+
         async function addNoteToFirebase(note) {
             try {
                 // Загружаем изображение, если оно есть
@@ -1781,6 +1874,35 @@
             }
         }
 
+        async function addEventToFirebase(event) {
+            try {
+                const eventWithData = {
+                    title: event.title,
+                    date: event.date,
+                    userId: currentUser.id,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                const docRef = await db.collection('userEvents').add(eventWithData);
+                console.log("Событие добавлено в Firebase");
+                return docRef.id;
+            } catch (error) {
+                console.error('Ошибка добавления события:', error);
+                return null;
+            }
+        }
+
+        async function deleteEventFromFirebase(eventId) {
+            try {
+                await db.collection('userEvents').doc(eventId).delete();
+                console.log("Событие удалено из Firebase");
+                return true;
+            } catch (error) {
+                console.error('Ошибка удаления события:', error);
+                return false;
+            }
+        }
+
         async function uploadImageToStorage(file) {
             try {
                 const fileName = `note_images/${currentUser.id}/${Date.now()}_${file.name}`;
@@ -1809,6 +1931,7 @@
             try {
                 await loadScheduleFromFirebase();
                 await loadUserNotes();
+                await loadUserEvents();
                 showSyncStatus('Синхронизация завершена', 'success');
                 console.log("Синхронизация завершена");
             } catch (error) {
@@ -1823,6 +1946,7 @@
                 const cacheData = {
                     scheduleData: scheduleData,
                     userNotes: userNotes,
+                    userEvents: userEvents,
                     currentWeek: currentWeek,
                     currentDay: currentDay,
                     lastUpdated: new Date().toISOString()
@@ -1830,6 +1954,7 @@
                 
                 await localForage.setItem('appData', cacheData);
                 await localForage.setItem('userNotes', userNotes);
+                await localForage.setItem('userEvents', userEvents);
                 console.log("Данные сохранены в кэш");
             } catch (error) {
                 console.error('Ошибка сохранения в кэш:', error);
@@ -1842,6 +1967,7 @@
                 if (cachedData) {
                     scheduleData = cachedData.scheduleData || {};
                     userNotes = cachedData.userNotes || [];
+                    userEvents = cachedData.userEvents || [];
                     currentWeek = cachedData.currentWeek || currentWeek;
                     currentDay = cachedData.currentDay || currentDay;
                     
@@ -1853,6 +1979,7 @@
                     
                     renderSchedule();
                     renderNotes();
+                    renderCalendar();
                     console.log("Данные загружены из кэша");
                 } else {
                     console.log("Кэш пустой, будет использоваться Firebase");
@@ -2003,6 +2130,7 @@
             document.querySelector('.app-navigation').style.display = 'flex';
             document.getElementById('scheduleSection').style.display = 'block';
             document.getElementById('notesSection').style.display = 'none';
+            document.getElementById('calendarSection').style.display = 'none';
             
             renderNotes();
         }
@@ -2232,6 +2360,196 @@
             }
         }
 
+        // Функции для календаря
+        function renderCalendar() {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const calendarTitle = document.getElementById('calendarTitle');
+            
+            // Устанавливаем заголовок календаря
+            const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 
+                               'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+            calendarTitle.textContent = `${monthNames[currentCalendarDate.getMonth()]} ${currentCalendarDate.getFullYear()}`;
+            
+            // Очищаем сетку календаря
+            calendarGrid.innerHTML = '';
+            
+            // Добавляем заголовки дней недели
+            const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            dayNames.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+            
+            // Получаем первый день месяца и количество дней в месяце
+            const firstDay = new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), 1);
+            const lastDay = new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth() + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            
+            // Определяем день недели первого дня месяца (0 - воскресенье, 1 - понедельник, ...)
+            let firstDayOfWeek = firstDay.getDay();
+            // Преобразуем: воскресенье (0) -> 6, понедельник (1) -> 0, и т.д.
+            firstDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+            
+            // Добавляем пустые ячейки для дней предыдущего месяца
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day other-month';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            // Добавляем дни текущего месяца
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                // Проверяем, является ли день сегодняшним
+                if (currentCalendarDate.getFullYear() === today.getFullYear() &&
+                    currentCalendarDate.getMonth() === today.getMonth() &&
+                    day === today.getDate()) {
+                    dayElement.classList.add('today');
+                }
+                
+                // Проверяем, есть ли события на этот день
+                const dayDate = new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), day);
+                const dayEvents = getUserEventsForDate(dayDate);
+                if (dayEvents.length > 0) {
+                    dayElement.style.background = 'var(--primary)';
+                    dayElement.style.color = 'white';
+                }
+                
+                dayElement.addEventListener('click', () => {
+                    selectCalendarDate(new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), day));
+                });
+                
+                calendarGrid.appendChild(dayElement);
+            }
+            
+            // Обновляем отображение событий для выбранной даты
+            renderCalendarEvents();
+        }
+
+        function selectCalendarDate(date) {
+            selectedCalendarDate = date;
+            renderCalendarEvents();
+        }
+
+        function getUserEventsForDate(date) {
+            return userEvents.filter(event => {
+                const eventDate = event.date.toDate ? event.date.toDate() : new Date(event.date);
+                return eventDate.getDate() === date.getDate() &&
+                       eventDate.getMonth() === date.getMonth() &&
+                       eventDate.getFullYear() === date.getFullYear();
+            });
+        }
+
+        function renderCalendarEvents() {
+            const calendarEvents = document.getElementById('calendarEvents');
+            const eventsForSelectedDate = getUserEventsForDate(selectedCalendarDate);
+            
+            if (eventsForSelectedDate.length === 0) {
+                calendarEvents.innerHTML = '<div class="empty-schedule">Событий на выбранную дату нет</div>';
+                return;
+            }
+            
+            let html = '<h3>События на ' + selectedCalendarDate.toLocaleDateString() + '</h3>';
+            
+            eventsForSelectedDate.forEach(event => {
+                html += `
+                    <div class="calendar-event">
+                        <div class="event-title">${event.title}</div>
+                        <button class="logout-button" onclick="deleteCalendarEvent('${event.id}')" style="margin-top: 5px;">Удалить</button>
+                    </div>
+                `;
+            });
+            
+            calendarEvents.innerHTML = html;
+        }
+
+        async function addCalendarEvent() {
+            const eventTitle = prompt('Введите название события:');
+            if (!eventTitle) return;
+            
+            const eventData = {
+                title: eventTitle,
+                date: selectedCalendarDate
+            };
+            
+            const eventId = await addEventToFirebase(eventData);
+            
+            if (eventId) {
+                // При успешном сохранении в Firebase, добавляем в локальный список
+                const newEvent = {
+                    id: eventId,
+                    title: eventTitle,
+                    date: selectedCalendarDate,
+                    userId: currentUser.id
+                };
+                
+                userEvents.push(newEvent);
+                await saveToCache();
+                renderCalendar();
+                showSyncStatus('Событие добавлено', 'success');
+                
+                // Пытаемся добавить в системный календарь
+                if ('Notification' in window && 'serviceWorker' in navigator) {
+                    addToDeviceCalendar(eventTitle, selectedCalendarDate);
+                }
+            } else {
+                // Если ошибка Firebase, сохраняем локально
+                const newEvent = {
+                    id: 'local_' + Date.now(),
+                    title: eventTitle,
+                    date: selectedCalendarDate,
+                    userId: currentUser.id
+                };
+                
+                userEvents.push(newEvent);
+                await saveToCache();
+                renderCalendar();
+                showSyncStatus('Событие добавлено локально (ошибка сети)', 'warning');
+            }
+        }
+
+        async function deleteCalendarEvent(eventId) {
+            if (confirm('Вы уверены, что хотите удалить это событие?')) {
+                // Пытаемся удалить из Firebase
+                const success = await deleteEventFromFirebase(eventId);
+                
+                if (success || eventId.startsWith('local_')) {
+                    // Если успешно удалено из Firebase или это локальное событие
+                    const eventIndex = userEvents.findIndex(event => event.id === eventId);
+                    if (eventIndex !== -1) {
+                        userEvents.splice(eventIndex, 1);
+                        await saveToCache();
+                        renderCalendar();
+                        showSyncStatus('Событие удалено', 'success');
+                    }
+                } else {
+                    showSyncStatus('Ошибка удаления', 'error');
+                }
+            }
+        }
+
+        function addToDeviceCalendar(title, date) {
+            // Эта функция пытается добавить событие в системный календарь устройства
+            // В реальном приложении это потребует использования API календаря или создания файла .ics
+            
+            // Создаем уведомление о событии
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification('Событие добавлено в календарь', {
+                    body: `${title} - ${date.toLocaleDateString()}`,
+                    icon: '/icon.png'
+                });
+            }
+            
+            // Показываем сообщение о том, как добавить в календарь вручную
+            alert(`Событие "${title}" создано. Для добавления в системный календарь скопируйте эту информацию и добавьте вручную.`);
+        }
+
         // Функции для напоминания о расписании
         function showScheduleReminder() {
             const reminder = document.getElementById('reminderBanner');
@@ -2346,6 +2664,7 @@
         window.editNote = editNote;
         window.hideReminder = hideReminder;
         window.showSection = showSection;
+        window.deleteCalendarEvent = deleteCalendarEvent;
     </script>
 </body>
 </html>
