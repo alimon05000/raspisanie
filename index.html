@@ -300,6 +300,7 @@
             overflow-x: auto;
             padding: 5px 0;
             scrollbar-width: none;
+            gap: 8px;
         }
 
         .app-navigation::-webkit-scrollbar {
@@ -307,7 +308,7 @@
         }
 
         .nav-button {
-            padding: 12px 18px;
+            padding: 12px 16px;
             border-radius: var(--border-radius);
             background: var(--card-bg);
             border: none;
@@ -315,11 +316,11 @@
             font-weight: 600;
             color: var(--text);
             white-space: nowrap;
-            margin: 0 5px;
             box-shadow: 0 4px 8px var(--card-shadow);
             flex: 1;
-            min-width: 80px;
+            min-width: 0;
             text-align: center;
+            font-size: 0.9rem;
         }
 
         .theme-glass .nav-button {
@@ -372,6 +373,7 @@
             overflow-x: auto;
             padding: 5px 0;
             scrollbar-width: none;
+            gap: 8px;
         }
 
         .day-navigation::-webkit-scrollbar {
@@ -379,7 +381,7 @@
         }
 
         .day-button {
-            padding: 12px 18px;
+            padding: 12px 16px;
             border-radius: var(--border-radius);
             background: var(--card-bg);
             border: none;
@@ -387,11 +389,11 @@
             font-weight: 600;
             color: var(--text);
             white-space: nowrap;
-            margin: 0 5px;
             box-shadow: 0 4px 8px var(--card-shadow);
             flex: 1;
-            min-width: 80px;
+            min-width: 0;
             text-align: center;
+            font-size: 0.9rem;
         }
 
         .theme-glass .day-button {
@@ -1260,6 +1262,47 @@
             font-weight: bold;
         }
 
+        .typing-indicator {
+            display: none;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            background: rgba(0,0,0,0.05);
+            color: var(--text);
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+            max-width: 80px;
+        }
+
+        .theme-glass .typing-indicator {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-galaxy .typing-indicator {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--secondary);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
         @media (max-width: 480px) {
             .app-container {
                 padding: 15px;
@@ -1271,8 +1314,7 @@
             
             .day-button, .nav-button {
                 padding: 10px 12px;
-                font-size: 0.9rem;
-                min-width: 70px;
+                font-size: 0.85rem;
             }
             
             .lesson {
@@ -1293,6 +1335,11 @@
             
             .message {
                 max-width: 90%;
+            }
+            
+            .chat-controls {
+                flex-direction: column;
+                gap: 5px;
             }
         }
 
@@ -1444,6 +1491,13 @@
                     <!-- Сообщения чата будут здесь -->
                     <div class="message ai-message">
                         Привет! Я ваш AI помощник. Я могу помочь вам с вопросами о расписании, заметках и календаре. Чем могу помочь?
+                    </div>
+                </div>
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
                     </div>
                 </div>
                 <div class="chat-input-container">
@@ -2741,7 +2795,7 @@
         }
 
         // Функции для чата с AI
-        function sendMessage() {
+        async function sendMessage() {
             const chatInput = document.getElementById('chatInput');
             const message = chatInput.value.trim();
             
@@ -2751,11 +2805,63 @@
             addMessageToChat(message, 'user');
             chatInput.value = '';
             
-            // Имитируем ответ AI
-            setTimeout(() => {
-                const aiResponse = generateAIResponse(message);
+            // Показываем индикатор набора сообщения
+            showTypingIndicator();
+            
+            try {
+                // Получаем ответ от AI
+                const aiResponse = await getAIResponse(message);
+                hideTypingIndicator();
                 addMessageToChat(aiResponse, 'ai');
-            }, 1000);
+            } catch (error) {
+                hideTypingIndicator();
+                addMessageToChat('Извините, произошла ошибка при получении ответа. Попробуйте позже.', 'ai');
+                console.error('Ошибка получения ответа от AI:', error);
+            }
+        }
+
+        async function getAIResponse(userMessage) {
+            // Используем OpenAI API для получения ответа
+            // В реальном приложении нужно использовать реальный API ключ
+            // Здесь используется демо-версия с простыми ответами
+            
+            // Имитируем задержку сети
+            await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+            
+            const lowerMessage = userMessage.toLowerCase();
+            
+            // Простая логика ответов на основе ключевых слов
+            if (lowerMessage.includes('привет') || lowerMessage.includes('здравствуй')) {
+                return 'Привет! Чем могу помочь? Я ваш AI помощник для работы с расписанием, заметками и календарем.';
+            } else if (lowerMessage.includes('расписание') || lowerMessage.includes('пары')) {
+                const today = new Date();
+                const dayNames = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+                const currentDayName = dayNames[currentDay];
+                
+                return `Сегодня ${currentDayName}. В разделе "Расписание" вы можете посмотреть занятия на сегодня и другие дни недели. Сейчас ${currentWeek} неделя.`;
+            } else if (lowerMessage.includes('заметк') || lowerMessage.includes('записи')) {
+                return 'В разделе "Мои заметки" вы можете создавать и редактировать свои заметки, а также добавлять к ним изображения. Это удобно для сохранения важной информации.';
+            } else if (lowerMessage.includes('календарь') || lowerMessage.includes('события')) {
+                return 'В разделе "Календарь" вы можете добавлять свои события и напоминания. Нажмите на нужную дату и создайте событие.';
+            } else if (lowerMessage.includes('помощь') || lowerMessage.includes('help')) {
+                return 'Я ваш AI помощник. Я могу помочь вам с вопросами о расписании, заметках и календаре. Просто задайте мне вопрос! Также я могу помочь с организацией учебного процесса.';
+            } else if (lowerMessage.includes('спасибо') || lowerMessage.includes('благодарю')) {
+                return 'Пожалуйста! Обращайтесь, если понадобится помощь. Удачи в учебе!';
+            } else if (lowerMessage.includes('экзамен') || lowerMessage.includes('сессия')) {
+                return 'Для подготовки к экзаменам рекомендую использовать раздел "Мои заметки" для создания конспектов и раздел "Календарь" для планирования подготовки.';
+            } else if (lowerMessage.includes('преподаватель') || lowerMessage.includes('учитель')) {
+                return 'Информацию о преподавателях вы можете найти в разделе "Расписание" рядом с названием предмета.';
+            } else if (lowerMessage.includes('аудитория') || lowerMessage.includes('кабинет')) {
+                return 'Номера аудиторий указаны в расписании рядом с каждым предметом. Если вы не можете найти аудиторию, обратитесь в учебную часть.';
+            } else {
+                // Если не распознано, используем более общий ответ
+                const responses = [
+                    'Интересный вопрос! К сожалению, я специализируюсь на помощи с расписанием, заметками и календарем. Можете уточнить ваш вопрос в контексте этих функций?',
+                    'Пока я могу помочь вам в основном с вопросами о расписании, заметках и календаре. Что именно вас интересует?',
+                    'Хороший вопрос! Я еще учусь и лучше всего разбираюсь в функциях этого приложения: расписании, заметках и календаре. Можете задать вопрос по этим темам?'
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
         }
 
         function addMessageToChat(message, sender) {
@@ -2771,25 +2877,14 @@
             chatHistory.push({ sender, message, timestamp: new Date() });
         }
 
-        function generateAIResponse(userMessage) {
-            const lowerMessage = userMessage.toLowerCase();
-            
-            // Простая логика ответов на основе ключевых слов
-            if (lowerMessage.includes('привет') || lowerMessage.includes('здравствуй')) {
-                return 'Привет! Чем могу помочь?';
-            } else if (lowerMessage.includes('расписание') || lowerMessage.includes('пары')) {
-                return 'Я могу помочь вам с расписанием. В разделе "Расписание" вы можете посмотреть занятия на сегодня и другие дни недели.';
-            } else if (lowerMessage.includes('заметк') || lowerMessage.includes('записи')) {
-                return 'В разделе "Мои заметки" вы можете создавать и редактировать свои заметки, а также добавлять к ним изображения.';
-            } else if (lowerMessage.includes('календарь') || lowerMessage.includes('события')) {
-                return 'В разделе "Календарь" вы можете добавлять свои события и напоминания.';
-            } else if (lowerMessage.includes('помощь') || lowerMessage.includes('help')) {
-                return 'Я ваш AI помощник. Я могу помочь вам с вопросами о расписании, заметках и календаре. Просто задайте мне вопрос!';
-            } else if (lowerMessage.includes('спасибо') || lowerMessage.includes('благодарю')) {
-                return 'Пожалуйста! Обращайтесь, если понадобится помощь.';
-            } else {
-                return 'Извините, я еще учусь и не могу ответить на этот вопрос. Попробуйте спросить о расписании, заметках или календаре.';
-            }
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'block';
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
         }
 
         function newChat() {
