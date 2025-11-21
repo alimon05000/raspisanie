@@ -1112,6 +1112,154 @@
             -webkit-backdrop-filter: blur(10px);
         }
 
+        /* Стили для чата с AI */
+        .chat-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 10px 30px var(--card-shadow);
+            margin-bottom: 30px;
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .theme-glass .chat-container {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .theme-galaxy .chat-container {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .chat-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .chat-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background: rgba(0,0,0,0.03);
+        }
+
+        .theme-glass .chat-messages {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-galaxy .chat-messages {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .message {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background: var(--primary);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .ai-message {
+            background: rgba(0,0,0,0.05);
+            color: var(--text);
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+
+        .theme-glass .ai-message {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-galaxy .ai-message {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 25px;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .theme-glass .chat-input {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .theme-galaxy .chat-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .chat-send {
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: none;
+            background: var(--success);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .theme-glass .chat-send {
+            background: #30D158;
+        }
+
+        .theme-galaxy .chat-send {
+            background: #9D4EDD;
+        }
+
+        .beta-badge {
+            background: var(--warning);
+            color: black;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
         @media (max-width: 480px) {
             .app-container {
                 padding: 15px;
@@ -1135,12 +1283,16 @@
                 font-size: 1rem;
             }
 
-            .schedule-container, .notes-container, .calendar-container {
+            .schedule-container, .notes-container, .calendar-container, .chat-container {
                 padding: 16px;
             }
 
-            .theme-glass .schedule-container, .theme-glass .notes-container, .theme-glass .calendar-container {
+            .theme-glass .schedule-container, .theme-glass .notes-container, .theme-glass .calendar-container, .theme-glass .chat-container {
                 padding: 16px;
+            }
+            
+            .message {
+                max-width: 90%;
             }
         }
 
@@ -1150,11 +1302,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .schedule-container, .notes-container, .calendar-container {
+        .schedule-container, .notes-container, .calendar-container, .chat-container {
             animation: fadeIn 0.5s ease;
         }
 
-        .lesson, .note, .calendar-event {
+        .lesson, .note, .calendar-event, .message {
             animation: fadeIn 0.5s ease;
             animation-fill-mode: both;
         }
@@ -1201,6 +1353,7 @@
             <button class="nav-button active" onclick="showSection('schedule')">Расписание</button>
             <button class="nav-button" onclick="showSection('notes')">Мои заметки</button>
             <button class="nav-button" onclick="showSection('calendar')">Календарь</button>
+            <button class="nav-button" onclick="showSection('chat')">AI Помощник <span class="beta-badge">BETA</span></button>
         </div>
 
         <!-- Раздел расписания -->
@@ -1274,6 +1427,29 @@
                 </div>
                 
                 <button class="add-event-button" id="addEventButton">Добавить событие</button>
+            </div>
+        </div>
+
+        <!-- Раздел чата с AI -->
+        <div class="section" id="chatSection">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h2 class="chat-title">AI Помощник</h2>
+                    <div class="chat-controls">
+                        <button class="logout-button" onclick="newChat()">Новый чат</button>
+                        <button class="logout-button" onclick="clearChat()">Очистить чат</button>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Сообщения чата будут здесь -->
+                    <div class="message ai-message">
+                        Привет! Я ваш AI помощник. Я могу помочь вам с вопросами о расписании, заметках и календаре. Чем могу помочь?
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Введите ваш вопрос...">
+                    <button class="chat-send" id="chatSend">Отправить</button>
+                </div>
             </div>
         </div>
 
@@ -1369,6 +1545,9 @@
         // Переменные для календаря
         let currentCalendarDate = new Date();
         let selectedCalendarDate = new Date();
+        
+        // Переменные для чата
+        let chatHistory = [];
 
         // Инициализация приложения
         document.addEventListener('DOMContentLoaded', async function() {
@@ -1471,6 +1650,14 @@
             
             document.getElementById('addEventButton').addEventListener('click', addCalendarEvent);
             
+            // Чат
+            document.getElementById('chatSend').addEventListener('click', sendMessage);
+            document.getElementById('chatInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
             // Первоначальная отрисовка расписания и календаря
             renderSchedule();
             renderCalendar();
@@ -1517,6 +1704,8 @@
             } else if (section === 'calendar') {
                 buttons[2].classList.add('active');
                 renderCalendar();
+            } else if (section === 'chat') {
+                buttons[3].classList.add('active');
             }
             
             // Загрузить данные для секции
@@ -2131,6 +2320,7 @@
             document.getElementById('scheduleSection').style.display = 'block';
             document.getElementById('notesSection').style.display = 'none';
             document.getElementById('calendarSection').style.display = 'none';
+            document.getElementById('chatSection').style.display = 'none';
             
             renderNotes();
         }
@@ -2550,6 +2740,71 @@
             alert(`Событие "${title}" создано. Для добавления в системный календарь скопируйте эту информацию и добавьте вручную.`);
         }
 
+        // Функции для чата с AI
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+            
+            if (!message) return;
+            
+            // Добавляем сообщение пользователя в чат
+            addMessageToChat(message, 'user');
+            chatInput.value = '';
+            
+            // Имитируем ответ AI
+            setTimeout(() => {
+                const aiResponse = generateAIResponse(message);
+                addMessageToChat(aiResponse, 'ai');
+            }, 1000);
+        }
+
+        function addMessageToChat(message, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = `message ${sender}-message`;
+            messageElement.textContent = message;
+            
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Сохраняем сообщение в историю
+            chatHistory.push({ sender, message, timestamp: new Date() });
+        }
+
+        function generateAIResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            // Простая логика ответов на основе ключевых слов
+            if (lowerMessage.includes('привет') || lowerMessage.includes('здравствуй')) {
+                return 'Привет! Чем могу помочь?';
+            } else if (lowerMessage.includes('расписание') || lowerMessage.includes('пары')) {
+                return 'Я могу помочь вам с расписанием. В разделе "Расписание" вы можете посмотреть занятия на сегодня и другие дни недели.';
+            } else if (lowerMessage.includes('заметк') || lowerMessage.includes('записи')) {
+                return 'В разделе "Мои заметки" вы можете создавать и редактировать свои заметки, а также добавлять к ним изображения.';
+            } else if (lowerMessage.includes('календарь') || lowerMessage.includes('события')) {
+                return 'В разделе "Календарь" вы можете добавлять свои события и напоминания.';
+            } else if (lowerMessage.includes('помощь') || lowerMessage.includes('help')) {
+                return 'Я ваш AI помощник. Я могу помочь вам с вопросами о расписании, заметках и календаре. Просто задайте мне вопрос!';
+            } else if (lowerMessage.includes('спасибо') || lowerMessage.includes('благодарю')) {
+                return 'Пожалуйста! Обращайтесь, если понадобится помощь.';
+            } else {
+                return 'Извините, я еще учусь и не могу ответить на этот вопрос. Попробуйте спросить о расписании, заметках или календаре.';
+            }
+        }
+
+        function newChat() {
+            if (confirm('Начать новый чат? Текущая история будет очищена.')) {
+                clearChat();
+                addMessageToChat('Привет! Я ваш AI помощник. Я могу помочь вам с вопросами о расписании, заметках и календаре. Чем могу помочь?', 'ai');
+            }
+        }
+
+        function clearChat() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+            chatHistory = [];
+        }
+
         // Функции для напоминания о расписании
         function showScheduleReminder() {
             const reminder = document.getElementById('reminderBanner');
@@ -2665,6 +2920,8 @@
         window.hideReminder = hideReminder;
         window.showSection = showSection;
         window.deleteCalendarEvent = deleteCalendarEvent;
+        window.newChat = newChat;
+        window.clearChat = clearChat;
     </script>
 </body>
 </html>
