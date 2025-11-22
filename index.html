@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000">
     <title>Расписание группы</title>
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgZmlsbD0iIzAwNzZmNiIgcng9IjIwIi8+PHRleHQgeD0iNTAiIHk9IjgwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiPlI8L3RleHQ+PC9zdmc+">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjMDA3NmY2IiByeD0iMjAiLz48dGV4dCB4PSI1MCIgeT0iODAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI0MCIgZmlsbD0iI2ZmZiI+UjwvdGV4dD48L3N2Zz4=">
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogItCg0LDRgdGB0LvRjNCy0LDRjtCJINCy0L7RgdGC0LDQstC70Y/QvdC+0LUg0L/RgNC+0YTQtdGB0YHQuNC+0L3QsNC70YzQvdC+0LkiLAogICJzaG9ydF9uYW1lIjogItCg0LDRgdGB0LvRjNCy0LDRjiIsCiAgInN0YXJ0X3VybCIgOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIZHBaSFJvUFNJeE1EQWxJaUJvWldsbmFIUTlJakV3TUNVaUlHWnBiR3c5SW1Kc1lTd2dZMjl1ZEdWdWRDQTlJbU52YlM5cGJYQnNZV2x1Wnk5cGJYQnNZV2x1WnlJZ1ptbHlkRDBpWVhCd2JHbGpZWFJwYjI0aUlIaHRiRzVjOVhWelpTazdJQzgrUEhCaGRHZ2daRDBpVFRBd01EQWxNakF3TkNBeE1EQXdYekF3TURBd0lERXdNREF3SURFeE1EQWxNREF3TURBaUlITjBlV3hsUFNKbWFXeHNJajQ4YzNSNWJHVStMbU52YlM5cGJYQnNZV2x1Wnk5cGJYQnNZV2x1WnlJZ1ptbHlkRDBpWVhCd2JHbGpZWFJwYjI0aUlIaHRiRzVjOVhWelpTazdJQzgrUEhCaGRHZ2daRDBpVFRBd01EQWxNakF3TkNBeE1EQXdYekF3TURBd0lERXdNREF3SURFeE1EQWxNREF3TURBaUlITjBlV3hsUFNKbWFXeHNJajQ4YzNSNWJHVStQZz09IiwKICAgICAgInNpemVzIjogIjE0NHgxNDQiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgICB9CiAgXQp9">
     
     <!-- Подключаем Firebase и LocalForage -->
@@ -15,9 +15,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
-    
-    <!-- Подключаем WebLLM -->
-    <script src="https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.38/dist/index.js"></script>
     
     <style>
         /* Все стили остаются без изменений */
@@ -1311,47 +1308,6 @@
             40% { transform: scale(1); opacity: 1; }
         }
 
-        /* Индикатор загрузки AI */
-        .ai-loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            flex-direction: column;
-            color: white;
-        }
-
-        .ai-loading-content {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: var(--border-radius);
-            text-align: center;
-            max-width: 400px;
-            margin: 20px;
-        }
-
-        .ai-progress {
-            width: 100%;
-            height: 10px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 5px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-
-        .ai-progress-bar {
-            height: 100%;
-            background: var(--primary);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
         /* Медиа-запросы для мобильных устройств */
         @media (max-width: 480px) {
             .app-container {
@@ -1426,21 +1382,6 @@
 </head>
 <body>
     <div class="parallax-bg"></div>
-    
-    <!-- Индикатор загрузки AI -->
-    <div class="ai-loading" id="aiLoading">
-        <div class="ai-loading-content">
-            <h3>Инициализация AI помощника</h3>
-            <p>Загружается модель Qwen2-0.5B...</p>
-            <div class="ai-progress">
-                <div class="ai-progress-bar" id="aiProgressBar"></div>
-            </div>
-            <p id="aiProgressText">Подготовка модели (0%)</p>
-            <small>Это может занять несколько минут при первом запуске</small>
-            <br>
-            <button class="logout-button" onclick="cancelAILoading()" style="margin-top: 15px;">Отменить загрузку</button>
-        </div>
-    </div>
     
     <div class="app-container">
         <header>
@@ -1560,7 +1501,7 @@
                     <div class="chat-controls">
                         <button class="logout-button" onclick="newChat()">Новый чат</button>
                         <button class="logout-button" onclick="clearChat()">Очистить чат</button>
-                        <button class="logout-button" id="aiStatusButton" style="background: var(--warning); color: black;">AI: Загрузка</button>
+                        <button class="logout-button" id="aiStatusButton" style="background: var(--success); color: black;">AI: Активен</button>
                     </div>
                 </div>
                 <div class="chat-messages" id="chatMessages">
@@ -1577,8 +1518,8 @@
                     </div>
                 </div>
                 <div class="chat-input-container">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Введите ваш вопрос..." disabled>
-                    <button class="chat-send" id="chatSend" disabled>Отправить</button>
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Введите ваш вопрос...">
+                    <button class="chat-send" id="chatSend">Отправить</button>
                 </div>
             </div>
         </div>
@@ -1624,11 +1565,215 @@
             storeName: "schedule_data"
         });
 
-        // WebLLM переменные
-        let engine = null;
-        let isAILoaded = false;
-        let isAILoading = false;
-        let aiLoadingCancelled = false;
+        // База знаний для AI помощника
+        const knowledgeBase = {
+            // Предметы и их описание
+            subjects: {
+                "Релейная защита и противоаварийная автоматика": {
+                    description: "Дисциплина, изучающая принципы защиты электроэнергетических систем от аварийных режимов работы",
+                    topics: [
+                        "Релейная защита линий электропередачи",
+                        "Дифференциальная защита трансформаторов",
+                        "Защита шин распределительных устройств",
+                        "Автоматическое повторное включение",
+                        "Автоматическая частотная разгрузка"
+                    ],
+                    keyTerms: {
+                        "Реле": "Устройство, автоматически реагирующее на изменение контролируемой величины",
+                        "Ток срабатывания": "Значение тока, при котором защита начинает действовать",
+                        "Выдержка времени": "Временная задержка срабатывания защиты",
+                        "Селективность": "Свойство защиты отключать только поврежденный элемент"
+                    }
+                },
+                "Геотермальная энергетика": {
+                    description: "Раздел энергетики, связанный с использованием тепловой энергии Земли",
+                    topics: [
+                        "Геотермальные ресурсы",
+                        "Типы геотермальных систем",
+                        "Геотермальные электростанции",
+                        "Прямое использование геотермального тепла"
+                    ],
+                    keyTerms: {
+                        "Геотермальный градиент": "Увеличение температуры с глубиной",
+                        "Горячие сухие породы": "Горные породы с высокой температурой, но без природного теплоносителя",
+                        "Геотермальный резервуар": "Подземный объем породы, содержащий теплоноситель",
+                        "Бинарный цикл": "Технология преобразования низкопотенциального тепла в электричество"
+                    }
+                },
+                "Теоретические основы использования ВЭ": {
+                    description: "Дисциплина, изучающая теоретические аспекты использования ветровой энергии",
+                    topics: [
+                        "Физические основы ветроэнергетики",
+                        "Аэродинамика ветроколеса",
+                        "Регулирование ветроустановок",
+                        "Интеграция ветроэнергетики в энергосистемы"
+                    ],
+                    keyTerms: {
+                        "Закон Беца": "Теоретический предел эффективности ветроколеса (59.3%)",
+                        "Коэффициент использования энергии ветра": "Отношение мощности ветроустановки к мощности ветрового потока",
+                        "Номинальная скорость ветра": "Скорость ветра, при которой ветроустановка развивает номинальную мощность",
+                        "Ветроэнергетический потенциал": "Количество энергии, которое можно получить от ветра в данной местности"
+                    }
+                },
+                "Энергетические сооружения установок нетрадиционной и ВЭ": {
+                    description: "Дисциплина, изучающая конструкции и сооружения для нетрадиционной и возобновляемой энергетики",
+                    topics: [
+                        "Фундаменты ветроустановок",
+                        "Конструкции солнечных электростанций",
+                        "Гидротехнические сооружения малых ГЭС",
+                        "Биоэнергетические комплексы"
+                    ],
+                    keyTerms: {
+                        "Ветроизмерительная мачта": "Сооружение для измерения параметров ветра",
+                        "Солнечный трекер": "Устройство для ориентации солнечных панелей на солнце",
+                        "Анкерное крепление": "Крепление фундамента к грунту",
+                        "Биореактор": "Устройство для производства биогаза"
+                    }
+                },
+                "Техника высоких напряжений": {
+                    description: "Дисциплина, изучающая явления, связанные с высокими напряжениями в электроэнергетике",
+                    topics: [
+                        "Электрические разряды в газах",
+                        "Пробой жидких и твердых диэлектриков",
+                        "Перенапряжения в электрических сетях",
+                        "Защита от перенапряжений"
+                    ],
+                    keyTerms: {
+                        "Коронный разряд": "Тип электрического разряда, возникающий в неоднородных полях",
+                        "Пробивное напряжение": "Напряжение, при котором происходит пробой изоляции",
+                        "Удельное сопротивление": "Свойство материала препятствовать прохождению тока",
+                        "Разрядник": "Устройство для защиты от перенапряжений"
+                    }
+                },
+                "Метрология": {
+                    description: "Наука об измерениях, методах и средствах обеспечения их единства и требуемой точности",
+                    topics: [
+                        "Основы метрологии",
+                        "Погрешности измерений",
+                        "Поверка и калибровка средств измерений",
+                        "Метрологическое обеспечение"
+                    ],
+                    keyTerms: {
+                        "Эталон": "Средство измерений, обеспечивающее воспроизведение и хранение единицы величины",
+                        "Погрешность": "Отклонение результата измерения от истинного значения",
+                        "Поверка": "Совокупность операций для подтверждения соответствия средств измерений",
+                        "Калибровка": "Определение действительных значений метрологических характеристик"
+                    }
+                },
+                "Эксплуатация электротех. оборудования ГЭС, ГАЭС": {
+                    description: "Дисциплина, изучающая особенности эксплуатации электротехнического оборудования гидроэлектростанций",
+                    topics: [
+                        "Эксплуатация гидрогенераторов",
+                        "Обслуживание трансформаторов",
+                        "Эксплуатация распределительных устройств",
+                        "Диагностика оборудования"
+                    ],
+                    keyTerms: {
+                        "Техническое обслуживание": "Комплекс операций по поддержанию работоспособности оборудования",
+                        "Ремонтный цикл": "Периодичность проведения ремонтов оборудования",
+                        "Вибродиагностика": "Метод диагностики по вибрационным характеристикам",
+                        "Термография": "Метод диагностики по тепловым полям"
+                    }
+                },
+                "Энергетическое оборудование возобновляемой энергетики": {
+                    description: "Дисциплина, изучающая оборудование для преобразования возобновляемых источников энергии",
+                    topics: [
+                        "Ветроэнергетические установки",
+                        "Солнечные панели и коллекторы",
+                        "Оборудование для биомассы",
+                        "Геотермальные установки"
+                    ],
+                    keyTerms: {
+                        "Инвертор": "Устройство для преобразования постоянного тока в переменный",
+                        "Контроллер заряда": "Устройство для управления зарядом аккумуляторов",
+                        "Фотоэлектрический эффект": "Явление возникновения ЭДС при освещении полупроводника",
+                        "Когенерация": "Совместное производство электрической и тепловой энергии"
+                    }
+                },
+                "Английский язык": {
+                    description: "Дисциплина, направленная на изучение английского языка для профессионального общения",
+                    topics: [
+                        "Технический английский",
+                        "Профессиональная лексика",
+                        "Деловая переписка",
+                        "Презентации на английском"
+                    ],
+                    keyTerms: {
+                        "Technical vocabulary": "Техническая лексика",
+                        "Power system": "Энергосистема",
+                        "Renewable energy": "Возобновляемая энергия",
+                        "Electrical equipment": "Электрооборудование"
+                    }
+                },
+                "Физкультура": {
+                    description: "Дисциплина, направленная на физическое развитие и укрепление здоровья",
+                    topics: [
+                        "Общая физическая подготовка",
+                        "Специальные упражнения",
+                        "Спортивные игры",
+                        "Здоровый образ жизни"
+                    ]
+                }
+            },
+            
+            // Общие учебные вопросы
+            general: {
+                examPreparation: [
+                    "Составьте план подготовки к экзамену по каждому предмету",
+                    "Повторяйте материал регулярно, а не в последний момент",
+                    "Используйте метод интервального повторения для лучшего запоминания",
+                    "Составляйте конспекты и шпаргалки - сам процесс их создания помогает запомнить материал",
+                    "Решайте практические задачи и примеры"
+                ],
+                timeManagement: [
+                    "Составляйте расписание на неделю вперед",
+                    "Выделяйте время для отдыха и перерывов",
+                    "Начинайте с самых сложных задач",
+                    "Используйте технику Помодоро (25 минут работы, 5 минут отдыха)",
+                    "Ставьте реалистичные цели на каждый день"
+                ],
+                noteTaking: [
+                    "Используйте Cornell method для ведения конспектов",
+                    "Выделяйте ключевые понятия и термины",
+                    "Создавайте ментальные карты для сложных тем",
+                    "Регулярно пересматривайте и дополняйте заметки",
+                    "Используйте разные цвета для выделения важной информации"
+                ]
+            },
+            
+            // Ответы на общие вопросы
+            responses: {
+                greeting: [
+                    "Привет! Как дела? Чем могу помочь с учебой?",
+                    "Здравствуйте! Рад вас видеть. Есть вопросы по расписанию или предметам?",
+                    "Приветствую! Готов ответить на ваши вопросы о занятиях и не только.",
+                    "Добрый день! Как проходит учебный день? Нужна помощь с чем-то?"
+                ],
+                thanks: [
+                    "Пожалуйста! Всегда рад помочь. Удачи в учебе!",
+                    "Не за что! Обращайтесь, если понадобится еще помощь.",
+                    "Рад был помочь! Если будут еще вопросы - я здесь.",
+                    "Всегда к вашим услугам! Успехов в освоении материала."
+                ],
+                howAreYou: [
+                    "Спасибо, отлично! Готов помогать вам с учебными вопросами.",
+                    "Все хорошо, спасибо! А у вас как дела? Чем могу помочь?",
+                    "Прекрасно! Готов ответить на ваши вопросы по учебе.",
+                    "Отлично! Жду ваших вопросов по расписанию и предметам."
+                ],
+                whatCanYouDo: [
+                    "Я могу помочь с вопросами о расписании, объяснить темы по предметам, помочь с подготовкой к занятиям и экзаменам, а также просто пообщаться на учебные темы.",
+                    "Моя специализация - помощь в учебе. Могу рассказать о предметах из вашего расписания, объяснить термины и теории, помочь с организацией учебного процесса.",
+                    "Я ваш учебный помощник! Могу: рассказать о предметах, объяснить сложные темы, помочь с подготовкой к занятиям, подсказать по расписанию и просто поддержать беседу на учебные темы."
+                ],
+                unknown: [
+                    "Интересный вопрос! К сожалению, я специализируюсь на учебных вопросах. Можете спросить о расписании, предметах или подготовке к занятиям?",
+                    "Хм, хороший вопрос! Я лучше всего разбираюсь в учебных темах - расписании, предметах, подготовке к занятиям. Можете задать вопрос по этим направлениям?",
+                    "Пока я могу помочь в основном с вопросами об учебе - расписании, предметах, подготовке к занятиям. Что именно вас интересует из этой области?",
+                    "Извините, я еще учусь и лучше всего понимаю вопросы об учебе. Можете спросить о расписании, предметах или учебном процессе?"
+                ]
+            }
+        };
 
         // Определение текущей недели (1 или 2)
         function getCurrentWeek() {
@@ -1806,143 +1951,7 @@
             if (savedTheme) {
                 changeTheme(savedTheme);
             }
-            
-            // Инициализация AI помощника с задержкой
-            setTimeout(() => {
-                initAIAssistant();
-            }, 2000);
         });
-
-        // Инициализация AI помощника с WebLLM
-        async function initAIAssistant() {
-            if (isAILoading || isAILoaded) return;
-            
-            isAILoading = true;
-            aiLoadingCancelled = false;
-            const aiLoading = document.getElementById('aiLoading');
-            const aiProgressBar = document.getElementById('aiProgressBar');
-            const aiProgressText = document.getElementById('aiProgressText');
-            const aiStatusButton = document.getElementById('aiStatusButton');
-            const chatInput = document.getElementById('chatInput');
-            const chatSend = document.getElementById('chatSend');
-            
-            try {
-                console.log("Инициализация AI помощника...");
-                aiStatusButton.textContent = "AI: Загрузка...";
-                aiStatusButton.style.background = "var(--warning)";
-                
-                // Показываем индикатор загрузки
-                aiLoading.style.display = 'flex';
-                
-                // Проверяем поддержку WebGPU
-                if (!navigator.gpu) {
-                    throw new Error("WebGPU не поддерживается в этом браузере");
-                }
-
-                // Инициализация WebLLM с улучшенной обработкой ошибок
-                const initProgressCallback = (report) => {
-                    if (aiLoadingCancelled) return;
-                    
-                    console.log("Прогресс загрузки:", report);
-                    const progress = report.progress * 100;
-                    aiProgressBar.style.width = `${progress}%`;
-                    
-                    if (report.text) {
-                        aiProgressText.textContent = report.text;
-                    } else {
-                        aiProgressText.textContent = `Загрузка модели (${Math.round(progress)}%)`;
-                    }
-                };
-
-                // Используем более простую модель для лучшей совместимости
-                const model = "Qwen2-0.5B-Instruct-q4f32_1-MLC";
-                
-                console.log("Начинаем загрузку модели:", model);
-                
-                // Создаем движок с улучшенной обработкой ошибок
-                engine = await webllm.CreateWebLLMEngine(model, { 
-                    initProgressCallback: initProgressCallback,
-                    appConfig: {
-                        model_list: [
-                            {
-                                "model_url": "https://huggingface.co/mlc-ai/Qwen2-0.5B-Instruct-q4f32_1-MLC/resolve/main/",
-                                "local_id": "Qwen2-0.5B-Instruct-q4f32_1-MLC",
-                                "model_lib_url": "https://raw.githubusercontent.com/mlc-ai/binary-mlc-llm-libs/main/qwen2-0.5b-instruct-q4f32_1-webgpu.wasm",
-                                "vram_required_MB": 2048
-                            }
-                        ]
-                    }
-                });
-                
-                if (aiLoadingCancelled) {
-                    console.log("Загрузка AI отменена пользователем");
-                    return;
-                }
-                
-                isAILoaded = true;
-                isAILoading = false;
-                
-                // Скрываем индикатор загрузки
-                aiLoading.style.display = 'none';
-                
-                // Обновляем статус
-                aiStatusButton.textContent = "AI: Активен";
-                aiStatusButton.style.background = "var(--success)";
-                
-                // Активируем поле ввода
-                chatInput.disabled = false;
-                chatSend.disabled = false;
-                chatInput.placeholder = "Введите ваш вопрос...";
-                
-                console.log("AI помощник успешно инициализирован");
-                addMessageToChat("✅ AI помощник готов к работе! Теперь я могу отвечать на ваши вопросы с помощью модели Qwen2-0.5B.", 'ai');
-                
-            } catch (error) {
-                console.error("Ошибка инициализации AI помощника:", error);
-                isAILoading = false;
-                
-                // Скрываем индикатор загрузки
-                aiLoading.style.display = 'none';
-                
-                // Обновляем статус в зависимости от типа ошибки
-                if (error.message.includes("WebGPU") || error.message.includes("gpu")) {
-                    aiStatusButton.textContent = "AI: WebGPU недоступен";
-                    addMessageToChat("❌ WebGPU не поддерживается в вашем браузере. AI функции недоступны. Пожалуйста, используйте Chrome, Edge или Safari последних версий.", 'ai');
-                } else if (error.message.includes("отменена") || aiLoadingCancelled) {
-                    aiStatusButton.textContent = "AI: Загрузка отменена";
-                    addMessageToChat("Загрузка AI модели была отменена. Буду использовать базовый режим ответов.", 'ai');
-                } else {
-                    aiStatusButton.textContent = "AI: Ошибка загрузки";
-                    addMessageToChat("❌ Не удалось загрузить AI модель. Буду использовать базовый режим ответов.", 'ai');
-                }
-                
-                aiStatusButton.style.background = "var(--danger)";
-                
-                // Активируем поле ввода с ограничениями
-                chatInput.disabled = false;
-                chatSend.disabled = false;
-                chatInput.placeholder = "AI не загружен, используется базовый режим";
-            }
-        }
-
-        // Функция отмены загрузки AI
-        function cancelAILoading() {
-            aiLoadingCancelled = true;
-            isAILoading = false;
-            document.getElementById('aiLoading').style.display = 'none';
-            
-            const aiStatusButton = document.getElementById('aiStatusButton');
-            aiStatusButton.textContent = "AI: Загрузка отменена";
-            aiStatusButton.style.background = "var(--danger)";
-            
-            const chatInput = document.getElementById('chatInput');
-            const chatSend = document.getElementById('chatSend');
-            chatInput.disabled = false;
-            chatSend.disabled = false;
-            chatInput.placeholder = "AI не загружен, используется базовый режим";
-            
-            addMessageToChat("Загрузка AI модели отменена. Буду использовать базовый режим ответов.", 'ai');
-        }
 
         // Показать раздел
         function showSection(section) {
@@ -1970,13 +1979,6 @@
                 renderCalendar();
             } else if (section === 'chat') {
                 buttons[3].classList.add('active');
-                
-                // Если AI еще не загружен и не загружается, пытаемся загрузить
-                if (!isAILoaded && !isAILoading) {
-                    setTimeout(() => {
-                        initAIAssistant();
-                    }, 500);
-                }
             }
             
             // Загрузить данные для секции
@@ -3011,7 +3013,7 @@
             alert(`Событие "${title}" создано. Для добавления в системный календарь скопируйте эту информацию и добавьте вручную.`);
         }
 
-        // Функции для чата с AI - УЛУЧШЕННАЯ ВЕРСИЯ С WebLLM
+        // Функции для чата с AI - УЛУЧШЕННАЯ ВЕРСИЯ С РУЧНОЙ РЕАЛИЗАЦИЕЙ
         async function sendMessage() {
             const chatInput = document.getElementById('chatInput');
             const message = chatInput.value.trim();
@@ -3026,15 +3028,8 @@
             showTypingIndicator();
             
             try {
-                let aiResponse;
-                
-                if (isAILoaded && engine) {
-                    // Используем WebLLM для генерации ответа
-                    aiResponse = await getAIResponseWithWebLLM(message);
-                } else {
-                    // Используем базовую логику ответов
-                    aiResponse = await getAIResponse(message);
-                }
+                // Используем улучшенную логику ответов
+                const aiResponse = await getAIResponse(message);
                 
                 hideTypingIndicator();
                 addMessageToChat(aiResponse, 'ai');
@@ -3045,84 +3040,243 @@
             }
         }
 
-        async function getAIResponseWithWebLLM(userMessage) {
-            if (!engine || !isAILoaded) {
-                throw new Error("AI движок не загружен");
-            }
-            
-            try {
-                // Создаем промпт для модели
-                const context = `
-Ты - полезный AI помощник для студента. Ты помогаешь с вопросами о расписании занятий, заметках и календаре.
-Текущая информация о расписании:
-- Сегодня ${new Date().toLocaleDateString('ru-RU')}
-- Текущая неделя: ${currentWeek}
-- Текущий день: ${['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'][currentDay]}
-
-Отвечай кратко и по делу. Если вопрос не связан с учебой, вежливо откажись отвечать, объяснив свою специализацию.
-`;
-                
-                const response = await engine.chat.completions.create({
-                    messages: [
-                        {
-                            "role": "system",
-                            "content": "Ты полезный AI помощник для студента. Отвечай кратко и информативно."
-                        },
-                        {
-                            "role": "user", 
-                            "content": userMessage
-                        }
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 500
-                });
-                
-                return response.choices[0].message.content;
-            } catch (error) {
-                console.error("Ошибка WebLLM:", error);
-                // Если WebLLM выдает ошибку, используем базовый режим
-                return await getAIResponse(userMessage);
-            }
-        }
-
         async function getAIResponse(userMessage) {
-            // Имитируем задержку сети
-            await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+            // Имитируем задержку сети для реалистичности
+            await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
             
             const lowerMessage = userMessage.toLowerCase();
             
-            // Простая логика ответов на основе ключевых слов
-            if (lowerMessage.includes('привет') || lowerMessage.includes('здравствуй')) {
-                return 'Привет! Чем могу помочь? Я ваш AI помощник для работы с расписанием, заметками и календарем.';
-            } else if (lowerMessage.includes('расписание') || lowerMessage.includes('пары')) {
-                const today = new Date();
-                const dayNames = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-                const currentDayName = dayNames[currentDay];
-                
-                return `Сегодня ${currentDayName}. В разделе "Расписание" вы можете посмотреть занятия на сегодня и другие дни недели. Сейчас ${currentWeek} неделя.`;
-            } else if (lowerMessage.includes('заметк') || lowerMessage.includes('записи')) {
-                return 'В разделе "Мои заметки" вы можете создавать и редактировать свои заметки, а также добавлять к ним изображения. Это удобно для сохранения важной информации.';
-            } else if (lowerMessage.includes('календарь') || lowerMessage.includes('события')) {
-                return 'В разделе "Календарь" вы можете добавлять свои события и напоминания. Нажмите на нужную дату и создайте событие.';
-            } else if (lowerMessage.includes('помощь') || lowerMessage.includes('help')) {
-                return 'Я ваш AI помощник. Я могу помочь вам с вопросами о расписании, заметках и календаре. Просто задайте мне вопрос!';
-            } else if (lowerMessage.includes('спасибо') || lowerMessage.includes('благодарю')) {
-                return 'Пожалуйста! Обращайтесь, если понадобится помощь. Удачи в учебе!';
-            } else if (lowerMessage.includes('экзамен') || lowerMessage.includes('сессия')) {
-                return 'Для подготовки к экзаменам рекомендую использовать раздел "Мои заметки" для создания конспектов и раздел "Календарь" для планирования подготовки.';
-            } else if (lowerMessage.includes('преподаватель') || lowerMessage.includes('учитель')) {
-                return 'Информацию о преподавателях вы можете найти в разделе "Расписание" рядом с названием предмета.';
-            } else if (lowerMessage.includes('аудитория') || lowerMessage.includes('кабинет')) {
-                return 'Номера аудиторий указаны в расписании рядом с каждым предметом. Если вы не можете найти аудиторию, обратитесь в учебную часть.';
-            } else {
-                // Если не распознано, используем общие ответы
-                const responses = [
-                    'Интересный вопрос! К сожалению, я специализируюсь на помощи с расписанием, заметками и календарем. Можете уточнить ваш вопрос в контексте этих функций?',
-                    'Пока я могу помочь вам в основном с вопросами о расписании, заметках и календаре. Что именно вас интересует?',
-                    'Хороший вопрос! Я еще учусь и лучше всего разбираюсь в функциях этого приложения: расписании, заметках и календаре. Можете задать вопрос по этим темам?'
-                ];
-                return responses[Math.floor(Math.random() * responses.length)];
+            // Обработка приветствий
+            if (lowerMessage.includes('привет') || lowerMessage.includes('здравствуй') || 
+                lowerMessage.includes('добрый') || lowerMessage.includes('хай') || 
+                lowerMessage.includes('здаров') || lowerMessage.includes('hello') ||
+                lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                return getRandomResponse(knowledgeBase.responses.greeting);
             }
+            
+            // Обработка благодарностей
+            if (lowerMessage.includes('спасибо') || lowerMessage.includes('благодарю') || 
+                lowerMessage.includes('thanks') || lowerMessage.includes('thank you')) {
+                return getRandomResponse(knowledgeBase.responses.thanks);
+            }
+            
+            // Обработка вопроса "как дела"
+            if (lowerMessage.includes('как дела') || lowerMessage.includes('как ты') || 
+                lowerMessage.includes('how are you') || lowerMessage.includes('how do you do')) {
+                return getRandomResponse(knowledgeBase.responses.howAreYou);
+            }
+            
+            // Обработка вопроса о возможностях
+            if (lowerMessage.includes('что ты умеешь') || lowerMessage.includes('что можешь') || 
+                lowerMessage.includes('твои возможности') || lowerMessage.includes('what can you do')) {
+                return getRandomResponse(knowledgeBase.responses.whatCanYouDo);
+            }
+            
+            // Поиск по предметам
+            for (const [subjectName, subjectInfo] of Object.entries(knowledgeBase.subjects)) {
+                if (lowerMessage.includes(subjectName.toLowerCase()) || 
+                    subjectName.toLowerCase().includes(lowerMessage)) {
+                    return generateSubjectResponse(subjectName, subjectInfo, userMessage);
+                }
+                
+                // Проверка по ключевым словам предмета
+                const subjectKeywords = Object.keys(subjectInfo.keyTerms || {});
+                for (const keyword of subjectKeywords) {
+                    if (lowerMessage.includes(keyword.toLowerCase())) {
+                        return generateSubjectResponse(subjectName, subjectInfo, userMessage);
+                    }
+                }
+            }
+            
+            // Обработка вопросов о расписании
+            if (lowerMessage.includes('расписание') || lowerMessage.includes('расписани') || 
+                lowerMessage.includes('пары') || lowerMessage.includes('занятия') ||
+                lowerMessage.includes('когда') || lowerMessage.includes('во сколько') ||
+                lowerMessage.includes('schedule') || lowerMessage.includes('classes')) {
+                return generateScheduleResponse(userMessage);
+            }
+            
+            // Обработка вопросов об экзаменах
+            if (lowerMessage.includes('экзамен') || lowerMessage.includes('сессия') || 
+                lowerMessage.includes('зачет') || lowerMessage.includes('подготовка') ||
+                lowerMessage.includes('exam') || lowerMessage.includes('session')) {
+                return generateExamResponse();
+            }
+            
+            // Обработка вопросов о времени
+            if (lowerMessage.includes('время') || lowerMessage.includes('который час') || 
+                lowerMessage.includes('current time') || lowerMessage.includes('what time')) {
+                const now = new Date();
+                return `Сейчас ${now.toLocaleTimeString('ru-RU')}. ${getRandomResponse(knowledgeBase.responses.howAreYou)}`;
+            }
+            
+            // Обработка вопросов о дате
+            if (lowerMessage.includes('дата') || lowerMessage.includes('число') || 
+                lowerMessage.includes('сегодня') || lowerMessage.includes('какое число') ||
+                lowerMessage.includes('date') || lowerMessage.includes('today')) {
+                const now = new Date();
+                return `Сегодня ${now.toLocaleDateString('ru-RU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}.`;
+            }
+            
+            // Обработка вопросов о неделе
+            if (lowerMessage.includes('неделя') || lowerMessage.includes('какая неделя') || 
+                lowerMessage.includes('week') || lowerMessage.includes('which week')) {
+                return `Сейчас ${currentWeek} неделя. ${currentWeek === 1 ? 'Первая неделя семестра.' : 'Вторая неделя семестра.'}`;
+            }
+            
+            // Обработка личных вопросов
+            if (lowerMessage.includes('как тебя зовут') || lowerMessage.includes('твое имя') || 
+                lowerMessage.includes('who are you') || lowerMessage.includes('your name')) {
+                return 'Меня зовут Ассистент! Я ваш AI помощник для учебы. Рад познакомиться!';
+            }
+            
+            // Обработка вопросов о создателе
+            if (lowerMessage.includes('кто тебя создал') || lowerMessage.includes('кто твой создатель') || 
+                lowerMessage.includes('who created you') || lowerMessage.includes('who made you')) {
+                return 'Меня создали как часть проекта "Умное расписание" чтобы помогать студентам в учебе!';
+            }
+            
+            // Обработка шуток
+            if (lowerMessage.includes('шутка') || lowerMessage.includes('анекдот') || 
+                lowerMessage.includes('joke') || lowerMessage.includes('tell me a joke')) {
+                const jokes = [
+                    'Почему электрик всегда носит с собой карандаш? Чтобы делать пометки на полях!',
+                    'Что сказал один трансформатор другому? Давай не будем меняться!',
+                    'Почему электроны никогда не опаздывают? Потому что у них всегда есть ток!',
+                    'Как называется птица, которая работает с электричеством? ЭлектроВорон!',
+                    'Что сказал резистор, когда его спросили о его работе? "Я просто сопротивляюсь!"'
+                ];
+                return jokes[Math.floor(Math.random() * jokes.length)];
+            }
+            
+            // Обработка комплиментов
+            if (lowerMessage.includes('умный') || lowerMessage.includes('классный') || 
+                lowerMessage.includes('крутой') || lowerMessage.includes('smart') || 
+                lowerMessage.includes('cool') || lowerMessage.includes('awesome')) {
+                return 'Спасибо за комплимент! Стараюсь быть полезным помощником в учебе!';
+            }
+            
+            // Обработка прощаний
+            if (lowerMessage.includes('пока') || lowerMessage.includes('до свидания') || 
+                lowerMessage.includes('прощай') || lowerMessage.includes('bye') || 
+                lowerMessage.includes('goodbye') || lowerMessage.includes('see you')) {
+                return 'До свидания! Удачи в учебе! Возвращайтесь, если понадобится помощь.';
+            }
+            
+            // Если не распознано, используем общие ответы
+            return getRandomResponse(knowledgeBase.responses.unknown);
+        }
+
+        function generateSubjectResponse(subjectName, subjectInfo, userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            // Если вопрос о термине
+            for (const [term, definition] of Object.entries(subjectInfo.keyTerms || {})) {
+                if (lowerMessage.includes(term.toLowerCase()) || 
+                    lowerMessage.includes('что такое') && lowerMessage.includes(term.toLowerCase()) ||
+                    lowerMessage.includes('определение') && lowerMessage.includes(term.toLowerCase())) {
+                    return `**${term}** - ${definition}. Это ключевое понятие в предмете "${subjectName}".`;
+                }
+            }
+            
+            // Если вопрос о предмете в целом
+            if (lowerMessage.includes('что такое') || lowerMessage.includes('что изучает') || 
+                lowerMessage.includes('расскажи о') || lowerMessage.includes('объясни')) {
+                let response = `**${subjectName}** - ${subjectInfo.description}. `;
+                
+                if (subjectInfo.topics && subjectInfo.topics.length > 0) {
+                    response += `Основные темы: ${subjectInfo.topics.slice(0, 3).join(', ')}. `;
+                }
+                
+                if (subjectInfo.keyTerms && Object.keys(subjectInfo.keyTerms).length > 0) {
+                    const terms = Object.keys(subjectInfo.keyTerms).slice(0, 3);
+                    response += `Ключевые термины: ${terms.join(', ')}.`;
+                }
+                
+                return response;
+            }
+            
+            // Если вопрос о темах
+            if (lowerMessage.includes('темы') || lowerMessage.includes('что проходят') || 
+                lowerMessage.includes('what topics') || lowerMessage.includes('topics')) {
+                if (subjectInfo.topics && subjectInfo.topics.length > 0) {
+                    return `В предмете "${subjectName}" изучаются следующие темы: ${subjectInfo.topics.join(', ')}.`;
+                } else {
+                    return `К сожалению, у меня нет информации о конкретных темах по предмету "${subjectName}".`;
+                }
+            }
+            
+            // Общий ответ о предмете
+            let response = `Предмет "${subjectName}" - ${subjectInfo.description}. `;
+            
+            if (subjectInfo.topics && subjectInfo.topics.length > 0) {
+                response += `Изучаемые темы включают: ${subjectInfo.topics.slice(0, 3).join(', ')}. `;
+            }
+            
+            response += 'Что именно вас интересует в этом предмете? Могу рассказать о конкретных терминах или темах.';
+            
+            return response;
+        }
+
+        function generateScheduleResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            const today = new Date();
+            const dayNames = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+            const currentDayName = dayNames[currentDay];
+            
+            // Если вопрос о сегодняшнем дне
+            if (lowerMessage.includes('сегодня') || lowerMessage.includes('today')) {
+                const dayData = scheduleData[currentDay] || { name: "День", lessons: [] };
+                const filteredLessons = (dayData.lessons || []).filter(lesson => 
+                    !lesson.week || lesson.week === currentWeek
+                );
+                
+                if (filteredLessons.length === 0) {
+                    return `Сегодня ${currentDayName}. Занятий нет, можно отдохнуть или заняться самостоятельной подготовкой!`;
+                }
+                
+                let response = `Сегодня ${currentDayName}. Пары: `;
+                response += filteredLessons.map(lesson => 
+                    `${getPairNumber(lesson.time)} пара: ${lesson.name} (${lesson.time})`
+                ).join(', ');
+                
+                return response;
+            }
+            
+            // Если вопрос о конкретном дне
+            for (let i = 0; i < dayNames.length; i++) {
+                if (lowerMessage.includes(dayNames[i].toLowerCase().substring(0, 3))) {
+                    const dayData = scheduleData[i] || { name: "День", lessons: [] };
+                    const filteredLessons = (dayData.lessons || []).filter(lesson => 
+                        !lesson.week || lesson.week === currentWeek
+                    );
+                    
+                    if (filteredLessons.length === 0) {
+                        return `В ${dayNames[i]} занятий нет.`;
+                    }
+                    
+                    let response = `В ${dayNames[i]} пары: `;
+                    response += filteredLessons.map(lesson => 
+                        `${getPairNumber(lesson.time)} пара: ${lesson.name} (${lesson.time})`
+                    ).join(', ');
+                    
+                    return response;
+                }
+            }
+            
+            // Общий ответ о расписании
+            return `Сейчас ${currentWeek} неделя. Сегодня ${currentDayName}. В разделе "Расписание" вы можете посмотреть занятия на все дни недели. Также могу рассказать о расписании на конкретный день - просто спросите!`;
+        }
+
+        function generateExamResponse() {
+            const tips = knowledgeBase.general.examPreparation;
+            const randomTips = [...tips].sort(() => 0.5 - Math.random()).slice(0, 3);
+            
+            return `Для подготовки к экзаменам рекомендую:\n\n• ${randomTips.join('\n• ')}\n\nТакже полезно использовать раздел "Мои заметки" для создания конспектов и раздел "Календарь" для планирования подготовки.`;
+        }
+
+        function getRandomResponse(responses) {
+            return responses[Math.floor(Math.random() * responses.length)];
         }
 
         function addMessageToChat(message, sender) {
@@ -3270,7 +3424,6 @@
             }
         }
 
-
         // Глобальные функции для использования в HTML
         window.deleteNote = deleteNote;
         window.editNote = editNote;
@@ -3279,7 +3432,6 @@
         window.deleteCalendarEvent = deleteCalendarEvent;
         window.newChat = newChat;
         window.clearChat = clearChat;
-        window.cancelAILoading = cancelAILoading;
     </script>
 </body>
 </html>
