@@ -1574,12 +1574,7 @@
         });
 
         // Конфигурация Hugging Face
-        const HUGGING_FACE_CONFIG = {
-            API_URL: "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-7B-Instruct",
-            TOKEN: "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",
-            MAX_TOKENS: 512,
-            TEMPERATURE: 0.7
-        };
+        const HUGGING_FACE_TOKEN = "{{HUGGING_FACE_TOKEN}}";
 
         // Определение текущей недели (1 или 2)
         function getCurrentWeek() {
