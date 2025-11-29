@@ -49,6 +49,17 @@
             --red: #FF453A;
             --text-primary: rgba(0,0,0,.9);
             --text-secondary: rgba(0,0,0,.6);
+            
+            /* Переменные для эффекта жидкого стекла */
+            --c-glass: #bbbbbc;
+            --c-light: #fff;
+            --c-dark: #000;
+            --c-content: #224;
+            --c-action: #0052f5;
+            --c-bg: #E8E8E9;
+            --glass-reflex-dark: 1;
+            --glass-reflex-light: 1;
+            --saturation: 150%;
         }
 
         .theme-glass {
@@ -64,6 +75,17 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             background-color: rgba(255, 255, 255, 0.1);
+            
+            /* Переменные для эффекта жидкого стекла */
+            --c-glass: #bbbbbc;
+            --c-light: #fff;
+            --c-dark: #000;
+            --c-content: rgba(0, 0, 0, 0.9);
+            --c-action: #7b68ee;
+            --c-bg: linear-gradient(135deg, #8ec5fc 0%, #e0c3fc 100%);
+            --glass-reflex-dark: 1;
+            --glass-reflex-light: 1;
+            --saturation: 150%;
         }
 
         .theme-dark {
@@ -73,14 +95,17 @@
             --text: rgba(255,255,255,.92);
             --text-primary: rgba(255,255,255,.92);
             --text-secondary: rgba(255,255,255,.6);
-        }
-
-        .theme-nature {
-            --background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --card-shadow: rgba(0, 0, 0, 0.2);
-            --text: #1B5E20;
-            --primary: #388E3C;
+            
+            /* Переменные для эффекта жидкого стекла */
+            --c-glass: #bbbbbc;
+            --c-light: #fff;
+            --c-dark: #000;
+            --c-content: rgba(255,255,255,.92);
+            --c-action: #03d5ff;
+            --c-bg: #1b1b1d;
+            --glass-reflex-dark: 2;
+            --glass-reflex-light: 0.3;
+            --saturation: 150%;
         }
 
         .theme-galaxy {
@@ -94,6 +119,17 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             background-color: rgba(0, 0, 0, 0.2);
+            
+            /* Переменные для эффекта жидкого стекла */
+            --c-light: #99deff;
+            --c-dark: #20001b;
+            --c-glass: hsl(335 250% 74% / 1);
+            --c-content: #d5dbe2;
+            --c-action: #ff48a9;
+            --c-bg: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            --glass-reflex-dark: 2;
+            --glass-reflex-light: 0.7;
+            --saturation: 200%;
         }
 
         * {
@@ -190,24 +226,22 @@
             font-weight: 600;
             box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.06) inset;
             border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .theme-glass .week-indicator {
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: rgba(0, 0, 0, 0.8);
-        }
-
-        .theme-galaxy .week-indicator {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: rgba(255, 255, 255, 0.95);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+            backdrop-filter: blur(8px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
         }
 
         .theme-selector {
@@ -226,24 +260,22 @@
             cursor: pointer;
             box-shadow: 0 4px 12px var(--card-shadow);
             color: var(--text);
-        }
-
-        .theme-glass .theme-button {
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: rgba(0, 0, 0, 0.8);
-        }
-
-        .theme-galaxy .theme-button {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: rgba(255, 255, 255, 0.95);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+            backdrop-filter: blur(8px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
         }
 
         .theme-options {
@@ -259,22 +291,22 @@
             gap: 10px;
             z-index: 100;
             width: 150px;
-        }
-
-        .theme-glass .theme-options {
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.25);
-        }
-
-        .theme-galaxy .theme-options {
-            background: rgba(30, 30, 60, 0.8);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.15);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+            backdrop-filter: blur(20px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(20px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
         }
 
         .theme-option {
@@ -283,22 +315,14 @@
             cursor: pointer;
             text-align: center;
             font-weight: 500;
-        }
-
-        .theme-glass .theme-option {
-            color: rgba(0, 0, 0, 0.8);
+            background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .theme-option:hover {
             background: rgba(0,0,0,0.05);
-        }
-
-        .theme-glass .theme-option:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .theme-galaxy .theme-option:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background-color: color-mix(in srgb, var(--c-glass) 20%, transparent);
         }
 
         /* Навигация между разделами - ИСПРАВЛЕНА АДАПТАЦИЯ */
@@ -333,40 +357,33 @@
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 100%;
-        }
-
-        .theme-glass .nav-button {
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: rgba(0, 0, 0, 0.8);
-        }
-
-        .theme-galaxy .nav-button {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: rgba(255, 255, 255, 0.95);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+            backdrop-filter: blur(8px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
         }
 
         .nav-button.active {
             background: var(--primary);
             color: white;
             box-shadow: 0 6px 15px rgba(10,132,255,0.4);
-        }
-
-        .theme-glass .nav-button.active {
-            background: #7b68ee;
-            box-shadow: 0 6px 15px rgba(123, 104, 238, 0.4);
-        }
-
-        .theme-galaxy .nav-button.active {
-            background: #9D4EDD;
-            box-shadow: 0 6px 15px rgba(157, 78, 221, 0.4);
+            
+            /* Эффект жидкого стекла для активной кнопки */
+            background-color: color-mix(in srgb, var(--c-action) 80%, transparent);
+            backdrop-filter: blur(12px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(12px) saturate(var(--saturation));
         }
 
         .section {
@@ -409,40 +426,33 @@
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 100%;
-        }
-
-        .theme-glass .day-button {
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: rgba(0, 0, 0, 0.8);
-        }
-
-        .theme-galaxy .day-button {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: rgba(255, 255, 255, 0.95);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+            backdrop-filter: blur(8px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
         }
 
         .day-button.active {
             background: var(--primary);
             color: white;
             box-shadow: 0 6px 15px rgba(10,132,255,0.4);
-        }
-
-        .theme-glass .day-button.active {
-            background: #7b68ee;
-            box-shadow: 0 6px 15px rgba(123, 104, 238, 0.4);
-        }
-
-        .theme-galaxy .day-button.active {
-            background: #9D4EDD;
-            box-shadow: 0 6px 15px rgba(157, 78, 221, 0.4);
+            
+            /* Эффект жидкого стекла для активной кнопки */
+            background-color: color-mix(in srgb, var(--c-action) 80%, transparent);
+            backdrop-filter: blur(12px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(12px) saturate(var(--saturation));
         }
 
         .schedule-container {
@@ -451,22 +461,22 @@
             padding: 20px;
             box-shadow: 0 10px 30px var(--card-shadow);
             margin-bottom: 30px;
-        }
-
-        .theme-glass .schedule-container {
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.25);
-        }
-
-        .theme-galaxy .schedule-container {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.15);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+            backdrop-filter: blur(20px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(20px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
         }
 
         .day-title {
@@ -478,10 +488,6 @@
             border-bottom: 2px solid var(--primary);
         }
 
-        .theme-glass .day-title {
-            color: rgba(0, 0, 0, 0.9);
-        }
-
         .lesson {
             padding: 15px;
             margin-bottom: 15px;
@@ -489,24 +495,20 @@
             background: rgba(0,0,0,0.03);
             border-left: 4px solid var(--primary);
             position: relative;
-        }
-
-        .theme-glass .lesson {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.25);
-            border-left: 4px solid #7b68ee;
-        }
-
-        .theme-galaxy .lesson {
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-left: 4px solid #9D4EDD;
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+            backdrop-filter: blur(12px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(12px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent);
         }
 
         .lesson-number {
@@ -526,29 +528,11 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .theme-glass .lesson-number {
-            background: #7b68ee;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-
-        .theme-galaxy .lesson-number {
-            background: #9D4EDD;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-
         .lesson-time {
             font-weight: 600;
             color: var(--primary);
             margin-bottom: 5px;
             font-size: 0.9rem;
-        }
-
-        .theme-glass .lesson-time {
-            color: #7b68ee;
-        }
-
-        .theme-galaxy .lesson-time {
-            color: #9D4EDD;
         }
 
         .time-remaining {
@@ -570,10 +554,6 @@
             font-size: 1.1rem;
         }
 
-        .theme-glass .lesson-name {
-            color: rgba(0, 0, 0, 0.9);
-        }
-
         .lesson-type {
             display: inline-block;
             padding: 4px 8px;
@@ -588,34 +568,14 @@
             color: var(--accent);
         }
 
-        .theme-glass .lecture {
-            background-color: rgba(123, 104, 238, 0.2);
-            color: #7b68ee;
-        }
-
-        .theme-galaxy .lecture {
-            background-color: rgba(157, 78, 221, 0.2);
-            color: #9D4EDD;
-        }
-
         .practice {
             background-color: rgba(48, 209, 88, 0.15);
             color: var(--green);
         }
 
-        .theme-glass .practice {
-            background-color: rgba(72, 187, 120, 0.2);
-            color: #48bb78;
-        }
-
         .seminar {
             background-color: rgba(255, 193, 7, 0.15);
             color: var(--warning);
-        }
-
-        .theme-glass .seminar {
-            background-color: rgba(246, 173, 85, 0.2);
-            color: #f6ad55;
         }
 
         .lesson-details {
@@ -624,14 +584,6 @@
             gap: 10px;
             font-size: 0.9rem;
             color: var(--secondary);
-        }
-
-        .theme-glass .lesson-details {
-            color: rgba(0, 0, 0, 0.7);
-        }
-
-        .theme-galaxy .lesson-details {
-            color: rgba(255, 255, 255, 0.8);
         }
 
         .lesson-detail {
@@ -647,10 +599,6 @@
             font-style: italic;
         }
 
-        .theme-glass .empty-schedule {
-            color: rgba(0, 0, 0, 0.6);
-        }
-
         /* Стили для заметок */
         .notes-container {
             background: var(--card-bg);
@@ -658,22 +606,22 @@
             padding: 20px;
             box-shadow: 0 10px 30px var(--card-shadow);
             margin-bottom: 30px;
-        }
-
-        .theme-glass .notes-container {
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.25);
-        }
-
-        .theme-galaxy .notes-container {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.15);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+            backdrop-filter: blur(20px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(20px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
         }
 
         .notes-title {
@@ -692,24 +640,20 @@
             background: rgba(0,0,0,0.03);
             border-left: 4px solid var(--success);
             position: relative;
-        }
-
-        .theme-glass .note {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.25);
-            border-left: 4px solid #30D158;
-        }
-
-        .theme-galaxy .note {
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-left: 4px solid #9D4EDD;
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+            backdrop-filter: blur(12px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(12px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent);
         }
 
         .note-title {
@@ -737,22 +681,22 @@
             padding: 20px;
             box-shadow: 0 10px 30px var(--card-shadow);
             margin-bottom: 30px;
-        }
-
-        .theme-glass .calendar-container {
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.25);
-        }
-
-        .theme-galaxy .calendar-container {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.15);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+            backdrop-filter: blur(20px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(20px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
         }
 
         .calendar-header {
@@ -810,14 +754,11 @@
             cursor: pointer;
             font-weight: 500;
             background: rgba(0,0,0,0.03);
-        }
-
-        .theme-glass .calendar-day {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .theme-galaxy .calendar-day {
-            background: rgba(255, 255, 255, 0.05);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+            backdrop-filter: blur(8px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
         }
 
         .calendar-day:hover {
@@ -846,14 +787,11 @@
             border-radius: 8px;
             background: rgba(0,0,0,0.03);
             border-left: 3px solid var(--primary);
-        }
-
-        .theme-glass .calendar-event {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .theme-galaxy .calendar-event {
-            background: rgba(255, 255, 255, 0.05);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+            backdrop-filter: blur(8px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
         }
 
         .event-title {
@@ -877,14 +815,6 @@
             font-weight: 600;
             cursor: pointer;
             margin-top: 15px;
-        }
-
-        .theme-glass .add-event-button {
-            background: #30D158;
-        }
-
-        .theme-galaxy .add-event-button {
-            background: #9D4EDD;
         }
 
         /* Стили для создания заметок */
@@ -917,14 +847,6 @@
             font-weight: 600;
             cursor: pointer;
             margin-top: 15px;
-        }
-
-        .theme-glass .add-note-button {
-            background: #30D158;
-        }
-
-        .theme-galaxy .add-note-button {
-            background: #9D4EDD;
         }
 
         .note-form {
@@ -974,14 +896,6 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-        }
-
-        .theme-glass .note-submit {
-            background: #30D158;
-        }
-
-        .theme-galaxy .note-submit {
-            background: #9D4EDD;
         }
 
         .note-cancel {
@@ -1034,22 +948,11 @@
             display: none;
             align-items: center;
             gap: 10px;
-        }
-        
-        .theme-glass .offline-notification {
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: rgba(0, 0, 0, 0.8);
-        }
-        
-        .theme-galaxy .offline-notification {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: rgba(255, 255, 255, 0.95);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+            backdrop-filter: blur(20px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(20px) saturate(var(--saturation));
         }
         
         /* Кнопка обновления */
@@ -1069,16 +972,22 @@
             box-shadow: 0 4px 12px var(--card-shadow);
             z-index: 100;
             border: none;
-        }
-        
-        .theme-glass .refresh-button {
-            background: #7b68ee;
-            box-shadow: 0 4px 12px rgba(123, 104, 238, 0.4);
-        }
-
-        .theme-galaxy .refresh-button {
-            background: #9D4EDD;
-            box-shadow: 0 4px 12px rgba(157, 78, 221, 0.4);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-action) 80%, transparent);
+            backdrop-filter: blur(12px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(12px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
         }
 
         /* Синхронизация статуса */
@@ -1096,6 +1005,11 @@
             align-items: center;
             gap: 10px;
             font-size: 0.9rem;
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+            backdrop-filter: blur(20px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(20px) saturate(var(--saturation));
         }
 
         /* Напоминание о расписании */
@@ -1137,22 +1051,22 @@
             height: 70vh;
             display: flex;
             flex-direction: column;
-        }
-
-        .theme-glass .chat-container {
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.25);
-        }
-
-        .theme-galaxy .chat-container {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.15);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+            backdrop-filter: blur(20px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(20px) saturate(var(--saturation));
+            box-shadow: 
+                inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+                inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+                inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+                inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+                inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+                inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+                inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+                0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
         }
 
         .chat-header {
@@ -1181,14 +1095,11 @@
             margin-bottom: 15px;
             border-radius: 10px;
             background: rgba(0,0,0,0.03);
-        }
-
-        .theme-glass .chat-messages {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .theme-galaxy .chat-messages {
-            background: rgba(255, 255, 255, 0.05);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+            backdrop-filter: blur(12px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(12px) saturate(var(--saturation));
         }
 
         .message {
@@ -1211,14 +1122,11 @@
             color: var(--text);
             margin-right: auto;
             border-bottom-left-radius: 5px;
-        }
-
-        .theme-glass .ai-message {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .theme-galaxy .ai-message {
-            background: rgba(255, 255, 255, 0.1);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+            backdrop-filter: blur(8px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
         }
 
         .chat-input-container {
@@ -1258,14 +1166,6 @@
             cursor: pointer;
         }
 
-        .theme-glass .chat-send {
-            background: #30D158;
-        }
-
-        .theme-galaxy .chat-send {
-            background: #9D4EDD;
-        }
-
         .beta-badge {
             background: var(--warning);
             color: black;
@@ -1285,14 +1185,11 @@
             margin-right: auto;
             border-bottom-left-radius: 5px;
             max-width: 80px;
-        }
-
-        .theme-glass .typing-indicator {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .theme-galaxy .typing-indicator {
-            background: rgba(255, 255, 255, 0.1);
+            
+            /* Эффект жидкого стекла */
+            background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+            backdrop-filter: blur(8px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
         }
 
         .typing-dots {
@@ -1341,10 +1238,6 @@
             }
 
             .schedule-container, .notes-container, .calendar-container, .chat-container {
-                padding: 16px;
-            }
-
-            .theme-glass .schedule-container, .theme-glass .notes-container, .theme-glass .calendar-container, .theme-glass .chat-container {
                 padding: 16px;
             }
             
@@ -1401,7 +1294,6 @@
                     <div class="theme-option" data-theme="default">Стандартная</div>
                     <div class="theme-option" data-theme="glass">Жидкое стекло</div>
                     <div class="theme-option" data-theme="dark">Тёмная</div>
-                    <div class="theme-option" data-theme="nature">Природа</div>
                     <div class="theme-option" data-theme="galaxy">Галактика</div>
                 </div>
             </div>
@@ -1839,7 +1731,7 @@
                         "Фундаменты ветроэнергетических установок",
                         "Сооружения геотермальных электростанций",
                         "Гидротехнические сооружения малых ГЭС",
-                        "Биоэнергетические комплексы",
+                                                "Биоэнергетические комплексы",
                         "Интеграция в ландшафт и окружающую среду",
                         "Строительство и монтаж энергоустановок ВИЭ"
                     ],
